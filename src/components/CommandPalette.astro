@@ -1,0 +1,492 @@
+---
+import { useTranslations, type Lang } from "../i18n/utils";
+
+interface Props {
+  lang?: Lang;
+}
+
+interface WorkItem {
+  id: string;
+  title: string;
+  description: string;
+  year: string;
+  tags: string[];
+  image?: string;
+  href?: string;
+}
+
+const { lang = "es" } = Astro.props;
+const t = useTranslations(lang);
+
+const WORK_ITEMS: WorkItem[] = [
+  {
+    id: "bento",
+    title: "Bento ✨",
+    description:
+      lang === "es" ? "Diseño de interfaz modular" : "Modular interface design",
+    year: "2024",
+    tags: ["UI/UX", "Design"],
+    href: "#",
+  },
+  {
+    id: "ai",
+    title: "AI Platform",
+    description:
+      lang === "es"
+        ? "Plataforma de inteligencia artificial"
+        : "Artificial intelligence platform",
+    year: "2024",
+    tags: ["AI", "Development"],
+    href: "#",
+  },
+  {
+    id: "droplette",
+    title: "Droplette",
+    description:
+      lang === "es"
+        ? "Aplicación de gestión de contenido"
+        : "Content management application",
+    year: "2023",
+    tags: ["Web", "Design"],
+    href: "#",
+  },
+  {
+    id: "docs",
+    title: "Documentation System",
+    description:
+      lang === "es"
+        ? "Sistema de documentación técnica"
+        : "Technical documentation system",
+    year: "2023",
+    tags: ["Development", "Tools"],
+    href: "#",
+  },
+  {
+    id: "figma",
+    title: "Figma Plugins",
+    description:
+      lang === "es"
+        ? "Colección de plugins para Figma"
+        : "Collection of Figma plugins",
+    year: "2023",
+    tags: ["Plugins", "Design"],
+    href: "#",
+  },
+  {
+    id: "mobile",
+    title: "Help Scout Mobile",
+    description:
+      lang === "es"
+        ? "Aplicación móvil de soporte"
+        : "Mobile support application",
+    year: "2022",
+    tags: ["Mobile", "iOS/Android"],
+    href: "#",
+  },
+];
+---
+
+<div
+  id="command-palette"
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label={t.commandPalette.ariaLabel}
+  aria-hidden="true"
+  data-lang={lang}
+>
+  <!-- Backdrop with blur -->
+  <div class="absolute inset-0 bg-black/60 backdrop-blur-xl" aria-hidden="true">
+  </div>
+
+  <!-- Panel -->
+  <div
+    class="relative z-10 h-full w-full flex items-start justify-center pt-20 md:pt-24 px-4"
+  >
+    <div
+      id="command-palette-container"
+      class="w-full max-w-4xl animate-scale-in-big"
+    >
+      <!-- Header -->
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-2xl md:text-3xl font-bold text-white font-playfair">
+          {lang === "es" ? "Mis Trabajos" : "My Works"}
+        </h2>
+        <button
+          id="close-palette-btn"
+          class="grid place-items-center w-10 h-10 rounded-full transition-all duration-150 ease-out cursor-pointer bg-linear-to-b from-white/55 via-white/45 to-white/40 text-white dark:from-neutral-900/65 dark:via-neutral-900/55 dark:to-neutral-900/50 shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.1),0_6px_16px_-3px_rgba(0,0,0,0.12)] hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.15),0_8px_20px_-3px_rgba(0,0,0,0.18)] active:scale-[0.95]"
+          aria-label={lang === "es" ? "Cerrar" : "Close"}
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Search bar -->
+      <div
+        class="mb-4 flex h-[52px] items-center rounded-[26px] px-4 transition-all duration-300 ease-out bg-linear-to-b from-white/45 via-white/35 to-white/30 backdrop-blur-2xl shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.1),0_10px_30px_-6px_rgba(0,0,0,0.15)]"
+      >
+        <svg
+          class="w-5 h-5 text-white/70 mr-3"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input
+          id="command-palette-input"
+          type="text"
+          placeholder={t.commandPalette.searchPlaceholder}
+          class="flex-1 bg-transparent outline-none text-white/90 placeholder:text-white/50 text-base font-semibold"
+          aria-label={t.commandPalette.ariaLabel}
+          autocomplete="off"
+        />
+        <kbd
+          class="px-3 py-1.5 rounded-full bg-white/10 text-white/70 text-xs font-bold border border-white/20"
+        >
+          Esc
+        </kbd>
+      </div>
+
+      <!-- Results Grid -->
+      <div class="max-h-[calc(100vh-280px)] overflow-auto">
+        <ul
+          id="command-palette-results"
+          class="grid grid-cols-1 md:grid-cols-2 gap-3"
+          role="listbox"
+          aria-label={t.commandPalette.searchResultsDescription}
+        >
+          <!-- Items will be rendered here -->
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      openCommandPalette?: () => void;
+      closeCommandPalette?: () => void;
+    }
+  }
+
+  type WorkItem = {
+    id: string;
+    title: string;
+    description: string;
+    year: string;
+    tags: string[];
+    image?: string;
+    href?: string;
+  };
+
+  // Constants (duplicated from frontmatter for script access)
+  const getWorkItems = (lang: string): WorkItem[] => [
+    {
+      id: "bento",
+      title: "Bento ✨",
+      description:
+        lang === "es"
+          ? "Diseño de interfaz modular"
+          : "Modular interface design",
+      year: "2024",
+      tags: ["UI/UX", "Design"],
+      href: "#",
+    },
+    {
+      id: "ai",
+      title: "AI Platform",
+      description:
+        lang === "es"
+          ? "Plataforma de inteligencia artificial"
+          : "Artificial intelligence platform",
+      year: "2024",
+      tags: ["AI", "Development"],
+      href: "#",
+    },
+    {
+      id: "droplette",
+      title: "Droplette",
+      description:
+        lang === "es"
+          ? "Aplicación de gestión de contenido"
+          : "Content management application",
+      year: "2023",
+      tags: ["Web", "Design"],
+      href: "#",
+    },
+    {
+      id: "docs",
+      title: "Documentation System",
+      description:
+        lang === "es"
+          ? "Sistema de documentación técnica"
+          : "Technical documentation system",
+      year: "2023",
+      tags: ["Development", "Tools"],
+      href: "#",
+    },
+    {
+      id: "figma",
+      title: "Figma Plugins",
+      description:
+        lang === "es"
+          ? "Colección de plugins para Figma"
+          : "Collection of Figma plugins",
+      year: "2023",
+      tags: ["Plugins", "Design"],
+      href: "#",
+    },
+    {
+      id: "mobile",
+      title: "Help Scout Mobile",
+      description:
+        lang === "es"
+          ? "Aplicación móvil de soporte"
+          : "Mobile support application",
+      year: "2022",
+      tags: ["Mobile", "iOS/Android"],
+      href: "#",
+    },
+  ];
+
+  /**
+   * Command Palette Manager
+   */
+  class CommandPaletteManager {
+    private items: WorkItem[] = [];
+    private filteredItems: WorkItem[] = [];
+    private isOpen = false;
+    private currentLang = "es";
+
+    private readonly elements = {
+      palette: document.getElementById("command-palette"),
+      container: document.getElementById("command-palette-container"),
+      input: document.getElementById(
+        "command-palette-input"
+      ) as HTMLInputElement | null,
+      results: document.getElementById("command-palette-results"),
+      closeBtn: document.getElementById("close-palette-btn"),
+    };
+
+    constructor() {
+      this.init();
+    }
+
+    private init(): void {
+      this.currentLang =
+        this.elements.palette?.getAttribute("data-lang") || "es";
+      this.items = getWorkItems(this.currentLang);
+      this.filteredItems = this.items;
+      this.setupEventListeners();
+      this.renderResults();
+      this.exposeGlobalMethods();
+    }
+
+    /**
+     * Opens the command palette
+     */
+    open(): void {
+      if (!this.elements.palette || this.isOpen) return;
+
+      this.isOpen = true;
+      this.elements.palette.classList.remove("hidden");
+      this.elements.palette.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+
+      // Focus input after animation
+      setTimeout(() => {
+        this.elements.input?.focus();
+      }, 50);
+
+      this.renderResults();
+    }
+
+    /**
+     * Closes the command palette
+     */
+    close(): void {
+      if (!this.elements.palette || !this.isOpen) return;
+
+      this.isOpen = false;
+      this.elements.palette.classList.add("hidden");
+      this.elements.palette.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+
+      // Reset input
+      if (this.elements.input) {
+        this.elements.input.value = "";
+      }
+      this.filterItems("");
+    }
+
+    /**
+     * Filters items based on query
+     */
+    private filterItems(query: string): void {
+      if (!query.trim()) {
+        this.filteredItems = this.items;
+      } else {
+        const normalizedQuery = query.toLowerCase().trim();
+        this.filteredItems = this.items.filter(
+          (item) =>
+            item.title.toLowerCase().includes(normalizedQuery) ||
+            item.description.toLowerCase().includes(normalizedQuery) ||
+            item.tags.some((tag) => tag.toLowerCase().includes(normalizedQuery))
+        );
+      }
+      this.renderResults();
+    }
+
+    /**
+     * Renders filtered results
+     */
+    private renderResults(): void {
+      if (!this.elements.results) return;
+
+      const noResultsText =
+        this.currentLang === "es"
+          ? "No se encontraron trabajos"
+          : "No works found";
+
+      if (this.filteredItems.length === 0) {
+        this.elements.results.innerHTML = `
+				<li class="col-span-full px-8 py-12 text-center text-white/60 text-lg" role="option">
+					${noResultsText}
+				</li>
+			`;
+        return;
+      }
+
+      this.elements.results.innerHTML = this.filteredItems
+        .map(
+          (item) => `
+				<li
+					class="group relative rounded-[20px] p-5 transition-all duration-150 ease-out cursor-pointer bg-linear-to-b from-white/45 via-white/35 to-white/30 backdrop-blur-2xl shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.1),0_6px_16px_-3px_rgba(0,0,0,0.12)] hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.15),0_8px_20px_-3px_rgba(0,0,0,0.18)] active:scale-[0.98]"
+					role="option"
+					data-item-id="${this.escapeHtml(item.id)}"
+					tabindex="0"
+				>
+					<div class="flex items-start justify-between mb-3">
+						<h3 class="text-lg font-bold text-white font-playfair">${this.escapeHtml(item.title)}</h3>
+						<span class="px-2.5 py-1 rounded-full bg-white/20 text-white/80 text-xs font-bold border border-white/30">
+							${this.escapeHtml(item.year)}
+						</span>
+					</div>
+					<p class="text-white/70 text-sm mb-3 line-clamp-2">
+						${this.escapeHtml(item.description)}
+					</p>
+					<div class="flex items-center justify-between">
+						<div class="flex gap-1.5 flex-wrap">
+							${item.tags
+                .map(
+                  (tag) => `
+								<span class="px-2 py-0.5 rounded-full bg-white/15 text-white/70 text-xs font-semibold border border-white/20">
+									${this.escapeHtml(tag)}
+								</span>
+							`
+                )
+                .join("")}
+						</div>
+						<svg
+							class="w-5 h-5 text-white/60 opacity-0 group-hover:opacity-100 transition-opacity"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+							/>
+						</svg>
+					</div>
+				</li>
+			`
+        )
+        .join("");
+    }
+
+    /**
+     * Escapes HTML to prevent XSS
+     */
+    private escapeHtml(text: string): string {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    /**
+     * Sets up event listeners
+     */
+    private setupEventListeners(): void {
+      // Input filter
+      this.elements.input?.addEventListener("input", (e) => {
+        const value = (e.target as HTMLInputElement).value;
+        this.filterItems(value);
+      });
+
+      // Close button
+      this.elements.closeBtn?.addEventListener("click", () => {
+        this.close();
+      });
+
+      // Close on click outside
+      document.addEventListener("mousedown", (e) => {
+        if (
+          this.isOpen &&
+          this.elements.container &&
+          !this.elements.container.contains(e.target as Node) &&
+          e.target !== this.elements.closeBtn
+        ) {
+          this.close();
+        }
+      });
+
+      // Close on Escape
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && this.isOpen) {
+          e.preventDefault();
+          this.close();
+        }
+      });
+    }
+
+    /**
+     * Exposes methods globally for other components
+     */
+    private exposeGlobalMethods(): void {
+      window.openCommandPalette = () => this.open();
+      window.closeCommandPalette = () => this.close();
+    }
+  }
+
+  // Initialize command palette when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => new CommandPaletteManager()
+    );
+  } else {
+    new CommandPaletteManager();
+  }
+</script>
