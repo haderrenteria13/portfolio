@@ -1,11 +1,24 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Navbar from "../sections/Navbar.astro";
+import Main from "../sections/Main.astro";
+import About from "../sections/About.astro";
+import GitHubActivity from "../sections/GitHubActivity.astro";
+import Projects from "../sections/Projects.astro";
+import Contact from "../sections/Contact.astro";
+import Layout from "../layouts/Layout.astro";
+import CommandPalette from "../components/CommandPalette.astro";
+import { defaultLang } from "../i18n/utils";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// Root path "/" is for default language (es)
+const lang = defaultLang;
 ---
 
-<Layout>
-	<Welcome />
+<Layout lang={lang}>
+  <Navbar lang={lang} />
+  <CommandPalette lang={lang} />
+  <Main lang={lang} />
+  <About />
+  <GitHubActivity />
+  <Projects />
+  <Contact />
 </Layout>

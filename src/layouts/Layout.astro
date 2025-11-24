@@ -1,22 +1,84 @@
+---
+import { useTranslations, type Lang } from "../i18n/utils";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = useTranslations(lang);
+---
+
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang={lang} class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <meta name="description" content={t.meta.description} />
+    <meta
+      name="keywords"
+      content="Hader Renteria, portfolio, developer, software engineer, full stack developer, frontend developer, backend developer, web developer, mobile developer, software developer, software engineer, full stack engineer, frontend engineer, backend engineer, web engineer, mobile engineer, software engineer, full stack engineer, frontend engineer, backend engineer, web engineer, mobile engineer, sena"
+    />
+    <meta name="author" content="Hader Renteria" />
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="bingbot" content="index, follow" />
+    <meta name="yandexbot" content="index, follow" />
+    <meta name="sitemap" content="https://hader.software/sitemap.xml" />
+    <title>{t.meta.title}</title>
+    <!-- Google Fonts: Roboto Flex (Variable Font) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      document.documentElement.classList.add("dark");
+    </script>
+  </head>
+  <body
+    class="bg-black text-neutral-900 dark:bg-neutral-950 dark:text-neutral-50 transition-colors duration-300"
+  >
+    <slot />
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style is:global>
+  @import "tailwindcss";
+  @plugin "@midudev/tailwind-animations";
+
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes shimmer {
+    to {
+      transform: translateX(150%);
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 3s infinite alternate ease-in-out;
+  }
+
+  .font-roboto-flex {
+    font-family: "Roboto Flex", sans-serif;
+  }
+
+  .font-playfair {
+    font-family: "Playfair Display", serif !important;
+  }
+
+  .font-cursive {
+    font-family: "Caveat", cursive;
+  }
 </style>
