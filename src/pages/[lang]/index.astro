@@ -1,0 +1,29 @@
+---
+import Navbar from "../../sections/Navbar.astro";
+import Main from "../../sections/Main.astro";
+import About from "../../sections/About.astro";
+import Projects from "../../sections/Projects.astro";
+import Contact from "../../sections/Contact.astro";
+import Layout from "../../layouts/Layout.astro";
+import CommandPalette from "../../components/CommandPalette.astro";
+import { languages, type Lang } from "../../i18n/utils";
+
+export function getStaticPaths() {
+  return languages
+    .filter((lang) => lang !== "es")
+    .map((lang) => ({
+      params: { lang },
+    }));
+}
+
+const lang = Astro.params.lang as Lang;
+---
+
+<Layout lang={lang}>
+  <Navbar lang={lang} />
+  <CommandPalette lang={lang} />
+  <Main lang={lang} />
+  <About />
+  <Projects />
+  <Contact />
+</Layout>
