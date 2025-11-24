@@ -2,7 +2,6 @@
 import { useTranslations, type Lang } from "../i18n/utils";
 import ProximityTitle from "../components/ProximityTitle.jsx";
 import FooterDock from "../components/FooterDock.jsx";
-import { Image, getImage } from "astro:assets";
 
 // Import assets for Dock
 import gitIcon from "../assets/git.webp";
@@ -16,29 +15,21 @@ interface Props {
 const { lang = "es" } = Astro.props;
 const t = useTranslations(lang);
 
-// Optimize images
-const optimizedGitIcon = await getImage({ src: gitIcon, format: "webp" });
-const optimizedIgIcon = await getImage({ src: igIcon, format: "webp" });
-const optimizedLinkedinIcon = await getImage({
-  src: linkedinIcon,
-  format: "webp",
-});
-
 const dockItems = [
   {
     label: "Instagram",
     href: "https://www.instagram.com/hader_____13/",
-    src: optimizedIgIcon.src,
+    src: igIcon.src,
   },
   {
     label: "GitHub",
     href: "https://github.com/haderrenteria13",
-    src: optimizedGitIcon.src,
+    src: gitIcon.src,
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/haderrenteria/",
-    src: optimizedLinkedinIcon.src,
+    src: linkedinIcon.src,
   },
 ];
 ---
