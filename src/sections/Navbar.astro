@@ -1,0 +1,224 @@
+---
+import { useTranslations, type Lang } from "../i18n/utils";
+import { Languages } from "@lucide/astro";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = useTranslations(lang);
+
+// Navigation items configuration
+const NAV_ITEMS = [
+  {
+    label: t.navbar.work,
+    action: "command-palette",
+    ariaLabel: t.navbar.goToWork,
+  },
+  {
+    label: t.navbar.about,
+    action: "scroll",
+    target: "about",
+    ariaLabel: t.navbar.goToAbout,
+  },
+  { label: t.navbar.play, action: "scroll", ariaLabel: t.navbar.goToPlay },
+  { label: t.navbar.notes, action: "scroll", ariaLabel: t.navbar.goToNotes },
+  {
+    label: t.navbar.contact,
+    action: "scroll",
+    target: "contact",
+    ariaLabel: t.navbar.goToContact,
+  },
+] as const;
+---
+
+<nav
+  class="fixed top-0 left-0 right-0 z-40 w-full animate-blurred-fade-in"
+  aria-label={t.navbar.work}
+>
+  <div
+    class="relative mx-auto flex max-w-5xl items-center justify-center gap-3 px-2 py-6 transition-all duration-500 ease-out will-change-transform"
+  >
+    <!-- Navigation capsule -->
+    <div
+      id="nav-capsule"
+      class="flex h-[52px] items-center rounded-[26px] px-1 transition-all duration-300 ease-out will-change-transform bg-linear-to-b from-white/45 via-white/35 to-white/30 backdrop-blur-2xl shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.1),0_10px_30px_-6px_rgba(0,0,0,0.15)] dark:from-neutral-900/55 dark:via-neutral-900/45 dark:to-neutral-900/40 dark:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.1),inset_0_-1.5px_3px_0_rgba(0,0,0,0.25),0_0_0_0.5px_rgba(255,255,255,0.08),0_0_0_2.5px_rgba(0,0,0,0.35),0_10px_30px_-6px_rgba(0,0,0,0.4)] bg-black"
+    >
+      <ul class="relative flex items-center gap-1 px-1" role="list">
+        <!-- Navigation items -->
+        <li class="relative">
+          <button
+            data-nav-action="command-palette"
+            class="nav-button cursor-pointer relative z-10 flex w-32 items-center justify-center gap-2 rounded-full px-4 py-2 text-base transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60 text-amber-900 font-bold dark:text-amber-100 bg-linear-to-b from-[#FAFAFA] via-[#F0F0F5] to-[#E8E8ED] dark:from-[#424244] dark:via-[#363638] dark:to-[#2C2C2E] shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.95),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(0,0,0,0.08),0_0_0_2.5px_rgba(58,58,60,0.22),0_6px_16px_-3px_rgba(251,191,36,0.18)] dark:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.12),inset_0_-1.5px_3px_0_rgba(0,0,0,0.35),0_0_0_0.5px_rgba(0,0,0,0.5),0_0_0_2.5px_rgba(58,58,60,0.22),0_6px_16px_-3px_rgba(0,0,0,0.25)] hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.95),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(0,0,0,0.08),0_0_0_2.5px_rgba(58,58,60,0.28),0_8px_20px_-3px_rgba(251,191,36,0.25)] dark:hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.12),inset_0_-1.5px_3px_0_rgba(0,0,0,0.35),0_0_0_0.5px_rgba(0,0,0,0.5),0_0_0_2.5px_rgba(58,58,60,0.28),0_8px_20px_-3px_rgba(0,0,0,0.3)] active:scale-[0.97] overflow-hidden"
+            aria-label={NAV_ITEMS[0].ariaLabel}
+            type="button"
+          >
+            <!-- Shine animation for Work button -->
+            <div class="absolute inset-0 overflow-hidden rounded-full">
+              <div
+                class="absolute inset-0 -translate-x-full bg-linear-to-r from-transparent via-white/60 to-transparent animate-shimmer mask-[linear-gradient(to_right,transparent,black,transparent)] opacity-1"
+              >
+              </div>
+            </div>
+            <span class="font-bold relative z-10">{NAV_ITEMS[0].label}</span>
+            <span
+              id="work-badge"
+              class="grid place-items-center h-[26px] w-[26px] rounded-xl text-amber-800 text-sm font-bold border transition-all duration-200 dark:text-amber-100 bg-linear-to-b from-white/90 to-white/70 border-amber-900/20 dark:from-neutral-800/90 dark:to-neutral-800/70 dark:border-amber-100/20 shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.5),0_1px_2px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_1px_1px_0_rgba(255,255,255,0.1),0_1px_2px_rgba(0,0,0,0.2)] relative z-10"
+              aria-label={t.navbar.searchHint}
+            >
+              /
+            </span>
+          </button>
+        </li>
+        {
+          NAV_ITEMS.slice(1).map((item) => (
+            <li class="relative">
+              <button
+                data-nav-action={item.action}
+                data-nav-target={"target" in item ? item.target : undefined}
+                class="nav-button cursor-pointer relative z-10 flex w-32 items-center justify-center gap-2 rounded-full px-4 py-2 text-base transition-all duration-150 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/60 text-gray-800/90 font-semibold dark:text-neutral-300/90 hover:bg-white/30 dark:hover:bg-white/10 hover:shadow-[inset_0_1px_2px_0_rgba(255,255,255,0.5),0_3px_6px_rgba(0,0,0,0.08)] dark:hover:shadow-[inset_0_1px_2px_0_rgba(255,255,255,0.08),0_3px_6px_rgba(0,0,0,0.15)] active:scale-[0.97]"
+                aria-label={item.ariaLabel}
+                type="button"
+              >
+                <span class="font-semibold">{item.label}</span>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Action buttons -->
+    <button
+      id="lang-button"
+      class="grid place-items-center w-[52px] h-[52px] rounded-full transition-all duration-150 ease-out cursor-pointer bg-linear-to-b from-white/55 via-white/45 to-white/40 text-gray-700 dark:from-neutral-900/65 dark:via-neutral-900/55 dark:to-neutral-900/50 dark:text-neutral-300 shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.1),0_6px_16px_-3px_rgba(0,0,0,0.12)] dark:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.1),inset_0_-1.5px_3px_0_rgba(0,0,0,0.25),0_0_0_0.5px_rgba(255,255,255,0.08),0_0_0_2.5px_rgba(0,0,0,0.35),0_6px_16px_-3px_rgba(0,0,0,0.25)] hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.7),inset_0_-1.5px_3px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(255,255,255,0.4),0_0_0_2.5px_rgba(0,0,0,0.15),0_8px_20px_-3px_rgba(0,0,0,0.18)] dark:hover:shadow-[inset_0_1.5px_3px_0_rgba(255,255,255,0.1),inset_0_-1.5px_3px_0_rgba(0,0,0,0.25),0_0_0_0.5px_rgba(255,255,255,0.08),0_0_0_2.5px_rgba(0,0,0,0.4),0_8px_20px_-3px_rgba(0,0,0,0.3)] active:scale-[0.95] bg-black"
+      aria-label={t.navbar.changeLanguage}
+      type="button"
+      data-lang={lang}
+    >
+      <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+      >
+        <Languages />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<script>
+  document.documentElement.classList.add("dark");
+  localStorage.theme = "dark";
+
+  declare global {
+    interface Window {
+      openCommandPalette?: () => void;
+      closeCommandPalette?: () => void;
+    }
+  }
+
+  // Get current language from button
+  const langButton = document.getElementById("lang-button");
+  const currentLang = langButton?.getAttribute("data-lang") || "es";
+
+  // Language switching functionality
+  langButton?.addEventListener("click", () => {
+    const currentPath = window.location.pathname;
+    let newPath: string;
+
+    if (currentLang === "es") {
+      // Switch from Spanish (default, no prefix) to English
+      newPath =
+        currentPath === "/" ? "/en" : currentPath.replace(/^\//, "/en/");
+    } else {
+      // Switch from English to Spanish (default, no prefix)
+      newPath = currentPath.replace(/^\/en/, "") || "/";
+    }
+
+    window.location.href = newPath;
+  });
+
+  /**
+   * Navigation manager - simplified without position tracking
+   */
+  class NavigationManager {
+    private readonly buttons =
+      document.querySelectorAll<HTMLButtonElement>(".nav-button");
+
+    constructor() {
+      this.init();
+    }
+
+    private init(): void {
+      this.setupKeyboardListener();
+      this.setupButtonListeners();
+    }
+
+    /**
+     * Handles navigation item click
+     */
+    handleItemClick(btn: HTMLButtonElement): void {
+      const action = btn.dataset.navAction;
+      const targetId = btn.dataset.navTarget;
+
+      if (action === "command-palette" && window.openCommandPalette) {
+        window.openCommandPalette();
+      } else if (action === "scroll" && targetId) {
+        const target = document.getElementById(targetId);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        } else {
+          console.warn(`Target element with id '${targetId}' not found`);
+        }
+      }
+    }
+
+    /**
+     * Sets up keyboard event listener
+     */
+    private setupKeyboardListener(): void {
+      const handleKeyDown = (e: KeyboardEvent): void => {
+        const target = e.target as HTMLElement | null;
+        const isTyping =
+          target &&
+          (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.isContentEditable);
+
+        // Open command palette with "/"
+        if (e.key === "/" && !isTyping) {
+          e.preventDefault();
+          window.openCommandPalette?.();
+          return;
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    /**
+     * Sets up button click listeners
+     */
+    private setupButtonListeners(): void {
+      this.buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          this.handleItemClick(btn);
+        });
+      });
+    }
+  }
+
+  // Initialize navigation when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => new NavigationManager()
+    );
+  } else {
+    new NavigationManager();
+  }
+</script>

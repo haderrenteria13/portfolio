@@ -1,0 +1,125 @@
+---
+import { useTranslations, type Lang } from "../i18n/utils";
+import ProximityTitle from "../components/ProximityTitle.jsx";
+import { Image } from "astro:assets";
+import myImage from "../assets/hader.png";
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "es" } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<header
+  class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black pt-28 pb-20"
+>
+  <!-- Subtle White Backlight (Behind top of image) -->
+  <div
+    class="absolute top-[20%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/10 rounded-full blur-[100px] pointer-events-none"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container mx-auto px-4 relative z-30 flex flex-col items-center">
+    <!-- Image Container -->
+    <div class="relative z-0 animate-fade-in">
+      <!-- Image with bottom fade -->
+      <div
+        class="relative w-[300px] h-[420px] md:w-[380px] md:h-[520px] rounded-4xl overflow-hidden"
+      >
+        <Image
+          src={myImage}
+          alt="Hader Renteria"
+          loading="eager"
+          class="w-full h-full object-cover object-top opacity-90"
+          style="mask-image: linear-gradient(to bottom, black 50%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);"
+        />
+      </div>
+    </div>
+
+    <!-- Text Content (Overlapping bottom of image) -->
+    <div
+      class="relative z-30 text-center max-w-5xl mx-auto -mt-24 md:-mt-32 animate-slide-up"
+    >
+      <h1
+        class="font-playfair text-5xl md:text-6xl lg:text-7xl leading-[0.9] tracking-tight text-white mb-8 drop-shadow-2xl"
+      >
+        <ProximityTitle
+          client:idle
+          text={lang === "es"
+            ? "La era del diseño"
+            : "The era of one-size-fits-all"}
+          className="block font-playfair"
+          fromFontVariationSettings="'wght' 400"
+          toFontVariationSettings="'wght' 900"
+        />
+        <ProximityTitle
+          client:idle
+          text={lang === "es" ? "genérico ha terminado" : "banking is over"}
+          className="block text-white/90 font-playfair"
+          fromFontVariationSettings="'wght' 400"
+          toFontVariationSettings="'wght' 900"
+        />
+      </h1>
+
+      <!-- Buttons -->
+      <div
+        class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
+      >
+        <a
+          href="#contact"
+          class="relative px-10 py-2 rounded-[28px] bg-linear-to-b from-[#FAFAFA] via-[#F0F0F5] to-[#E8E8ED] text-black font-bold text-[17px] hover:from-[#F5F5F5] hover:to-[#E0E0E5] transition-all duration-150 min-w-[220px] text-center shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.95),inset_0_-2px_4px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(0,0,0,0.08),0_0_0_3.5px_rgba(58,58,60,0.28),0_8px_16px_-4px_rgba(0,0,0,0.25),0_4px_8px_-2px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.95),inset_0_-2px_4px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(0,0,0,0.08),0_0_0_3.5px_rgba(58,58,60,0.38),0_10px_20px_-4px_rgba(0,0,0,0.3),0_6px_12px_-2px_rgba(0,0,0,0.2)] active:scale-[0.97] active:shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.95),inset_0_-2px_4px_0_rgba(0,0,0,0.06),0_0_0_0.5px_rgba(0,0,0,0.08),0_0_0_3.5px_rgba(58,58,60,0.38),0_2px_4px_-2px_rgba(0,0,0,0.2)]"
+        >
+          {lang === "es" ? "Contactar" : "Contact Sales"}
+        </a>
+        <a
+          href="#work"
+          class="relative px-10 py-2 rounded-[28px] bg-linear-to-b from-[#424244] via-[#363638] to-[#2C2C2E] text-white font-bold text-[17px] hover:from-[#4A4A4C] hover:to-[#363638] transition-all duration-150 min-w-[220px] text-center shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.12),inset_0_-2px_4px_0_rgba(0,0,0,0.4),0_0_0_0.5px_rgba(0,0,0,0.5),0_0_0_3.5px_rgba(58,58,60,0.28),0_8px_16px_-4px_rgba(0,0,0,0.25),0_4px_8px_-2px_rgba(0,0,0,0.15)] hover:shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.12),inset_0_-2px_4px_0_rgba(0,0,0,0.4),0_0_0_0.5px_rgba(0,0,0,0.5),0_0_0_3.5px_rgba(58,58,60,0.38),0_10px_20px_-4px_rgba(0,0,0,0.3),0_6px_12px_-2px_rgba(0,0,0,0.2)] active:scale-[0.97] active:shadow-[inset_0_2px_4px_0_rgba(255,255,255,0.12),inset_0_-2px_4px_0_rgba(0,0,0,0.4),0_0_0_0.5px_rgba(0,0,0,0.5),0_0_0_3.5px_rgba(58,58,60,0.38),0_2px_4px_-2px_rgba(0,0,0,0.2)]"
+        >
+          {lang === "es" ? "Ver trabajos" : "Open Account"}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom fade to match About section -->
+  <div
+    class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black via-black/80 to-transparent z-20 pointer-events-none"
+  >
+  </div>
+
+  <style>
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-slide-up {
+      animation: slide-up 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      opacity: 0;
+    }
+  </style>
+</header>
