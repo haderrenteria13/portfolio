@@ -19,5 +19,13 @@ export default defineConfig({
       plugins: [tailwindcss()]
 	},
 
-  integrations: [react()]
+  integrations: [react()],
+
+  redirects: {
+    '/ronaldbarber': 'https://ronaldbarber.shop', 
+    '/ronaldbarbergithub': 'https://github.com/haderrenteria13/ronald-barber',
+    '/whatsappbot': 'https://github.com/haderrenteria13/whatsapp-bot',
+    '/linkedin': 'https://www.linkedin.com/in/haderrenteria',
+    '/github': 'https://github.com/haderrenteria13',
+  },
 });
