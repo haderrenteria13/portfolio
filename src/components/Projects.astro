@@ -1,0 +1,869 @@
+---
+import enrutapp from '../assets/enrutapp.png';
+import ronaldbarber from '../assets/ronaldbarber.png';
+import caninossabs from '../assets/caninossabs.png';
+import bateadev from '../assets/bateadev.png';
+import whatsappbot from '../assets/whatsappbot.png';
+import orvejoyeria from '../assets/orvejoyeria.png';
+
+const projects = [
+	{
+		name: "EnrutApp",
+		image: enrutapp.src,
+		year: 2026,
+		description: "Sistema de gestión logística para transporte. Optimiza asignación de vehículos, valida identidad y rastrea GPS en tiempo real.",
+		techs: ["React", "JavaScript", "NestJS", "PostgreSQL", "Socket.IO", "Google Maps API", "Axios", "Material Design", "Prisma", "Expo"],
+		repo: "https://github.com/EnrutApp",
+		url: "https://www.enrut.app/",
+	},
+	{
+		name: "BateaDev",
+		image: bateadev.src,
+		year: 2026,
+		description: "Herramientas digitales para resolver problemáticas reales y cerrar brechas de acceso tecnológico en Colombia.",
+		techs: ["Astro", "TypeScript", "Tailwind CSS", "React.js", "Node.js", "Next.js", "TensorFlow", "Git"],
+		repo: "https://github.com/Batea-Dev/",
+	},
+	{
+		name: "Orve Joyeria",
+		image: orvejoyeria.src,
+		year: 2026,
+		description: "E-commerce de joyería de oro laminado con catálogo interactivo y dashboard de administración.",
+		techs: ["Next.js", "Tailwind CSS", "Strapi", "Shadcn"],
+		repo: "",
+		url: "",
+	},
+	{
+		name: "Ronald Barber",
+		image: ronaldbarber.src,
+		year: 2025,
+		description: "Sistema de reservas online para barbería. Agenda citas en tiempo real con notificaciones automáticas.",
+		techs: ["Next.js", "Tailwind CSS", "SupaBase", "TypeScript", "Node.js", "WhatsApp.js", "Express"],
+		repo: "https://github.com/haderrenteria13/ronald-barber",
+		url: "https://www.ronaldbarber.shop/",
+	},
+	{
+		name: "WhatsApp Bot",
+		image: whatsappbot.src,
+		year: 2025,
+		description: "API REST para enviar mensajes de WhatsApp mediante whatsapp-web.js. Ideal para notificaciones y alertas automatizadas.",
+		techs: ["Node.js", "Express", "WhatsApp.js", "Puppeteer", "Docker"],
+		repo: "https://github.com/haderrenteria13/whatsapp-bot",
+		url: "",
+	},
+	{
+		name: "Caninos Sabs",
+		image: caninossabs.src,
+		year: 2025,
+		description: "Plataforma web para clínica veterinaria con catálogo de productos, gestión de inventario y pedidos en tiempo real.",
+		techs: ["React.js", "MongoDB", "Express", "Node.js", "Mongoose", "JWT", "Tailwind CSS", "JavaScript"],
+		repo: "https://github.com/haderrenteria13/caninos-sabs-platform",
+		url: "",
+	},
+];
+---
+
+<section id="projects">
+	{projects.map((project, index) => (
+		<div
+			class="project-item"
+			data-has-image={project.image ? "true" : undefined}
+			data-image={project.image}
+			data-name={project.name}
+			data-description={project.description}
+			data-techs={JSON.stringify(project.techs)}
+			data-repo={project.repo || ""}
+			data-url={project.url || ""}
+			style={`--idx:${index}`}
+		>
+			<div class="project-info">
+				<h3>{project.name}</h3>
+			</div>
+			<p>{project.year}</p>
+		</div>
+	))}
+	<div class="project-preview" id="shared-preview">
+		<div class="preview-inner">
+			<img src="" alt="" loading="lazy" />
+			<div class="preview-shine"></div>
+		</div>
+	</div>
+</section>
+
+<!-- Modal de detalle de proyecto -->
+<div id="project-overlay" class="overlay">
+	<div class="overlay-backdrop"></div>
+	<div class="modal-card" role="dialog" aria-labelledby="project-dialog-title">
+		<div class="modal-surface">
+			<div class="modal-header">
+				<span class="header-eyebrow" id="project-dialog-year"></span>
+				<h2 id="project-dialog-title" aria-label="detail"></h2>
+			</div>
+
+			<div class="modal-body">
+				<div class="project-modal-image">
+					<img id="project-dialog-img" src="" alt="" />
+				</div>
+				<p class="project-modal-desc" id="project-dialog-desc"></p>
+				<div class="project-modal-techs" id="project-dialog-techs"></div>
+				<div class="project-modal-actions" id="project-dialog-actions"></div>
+			</div>
+
+			<button class="close-btn" type="button" aria-label="Cerrar">
+				<svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+					<path d="M9.5 1.5L1.5 9.5M1.5 1.5l8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+</div>
+
+<style>
+	#projects {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		padding: 16px;
+	}
+
+	#projects.is-dialog-open .project-item {
+		pointer-events: none;
+	}
+
+	.project-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 70px;
+		padding: 14px 20px;
+		margin: 0 -20px;
+		transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+		cursor: pointer;
+		border-radius: 18px;
+		position: relative;
+		opacity: 0;
+		animation: listSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) calc(0.3s + var(--idx) * 0.07s) forwards;
+	}
+
+	.project-item::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 18px;
+		background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
+		opacity: 0;
+		transition: opacity 0.35s ease;
+	}
+
+	.project-item:hover::before {
+		opacity: 1;
+	}
+
+	.project-item:hover {
+		padding: 16px 24px;
+		margin: 0 -24px;
+		box-shadow:
+			0 2px 8px rgba(0, 0, 0, 0.04),
+			0 8px 24px rgba(0, 0, 0, 0.08);
+		-webkit-backdrop-filter: blur(16px);
+		backdrop-filter: blur(16px);
+		transform: scale(1.02);
+	}
+
+	.project-info {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		position: relative;
+		z-index: 1;
+	}
+
+	/* ── Preview container ── */
+	.project-preview {
+		position: fixed;
+		top: 50%;
+		left: 46%;
+		transform: translate(var(--mx, 0px), calc(-50% + var(--my, 0px)));
+		width: 50vw;
+		max-width: 720px;
+		opacity: 0;
+		pointer-events: none;
+		z-index: 100;
+		will-change: transform, opacity;
+		transition: opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+		perspective: 800px;
+	}
+
+	.project-preview.visible {
+		opacity: 1;
+	}
+
+	.preview-inner {
+		position: relative;
+		transform:
+			rotateX(var(--rotX, 0deg))
+			rotateY(var(--rotY, 0deg))
+			scale(var(--scale, 0.92));
+		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+		transform-style: preserve-3d;
+		border-radius: 20px;
+		overflow: hidden;
+	}
+
+	.project-preview.visible .preview-inner {
+		--scale: 1;
+	}
+
+	.preview-inner::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: 20px;
+
+		pointer-events: none;
+	}
+
+	.preview-shine {
+		height: 90%;
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(
+			105deg,
+			transparent 35%,
+			rgba(255,255,255,0.06) 45%,
+			rgba(255,255,255,0.10) 50%,
+			rgba(255,255,255,0.06) 55%,
+			transparent 70%
+		);
+		opacity: 0;
+		transition: opacity 0.4s ease;
+		pointer-events: none;
+		border-radius: 20px;
+	}
+
+	.project-preview.visible .preview-shine {
+		opacity: 1;
+	}
+
+	.project-preview img {
+		width: 100%;
+		height: auto;
+		display: block;
+		border-radius: 20px;
+		transition: opacity 0.35s ease;
+	}
+
+	h3 {
+		margin: 0;
+		font-weight: 400;
+		color: #000000;
+		font-size: 27px;
+		white-space: nowrap;
+		position: relative;
+		z-index: 1;
+		transition: color 0.3s ease;
+	}
+
+	.project-item:hover h3 {
+		font-weight: 500;
+	}
+
+	p {
+		margin: 0;
+		font-weight: 400;
+		color: #AEAEB2;
+		font-size: 22px;
+		position: relative;
+		z-index: 1;
+	}
+
+	@keyframes listSlideIn {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@media (max-width: 900px) {
+		.project-preview {
+			display: none;
+		}
+
+		#projects {
+			padding: 0;
+			width: 100%;
+		}
+
+		.project-item {
+			gap: 16px;
+			padding: 10px 12px;
+			margin: 0;
+		}
+
+		.project-item:hover {
+			padding: 10px 12px;
+			margin: 0;
+			transform: none;
+			box-shadow: none;
+			background: rgba(0, 0, 0, 0.02);
+		}
+
+		.project-item::before {
+			display: none;
+		}
+
+		.project-item h3 {
+			font-size: 18px;
+		}
+
+		.project-item p {
+			font-size: 14px;
+			color: #AEAEB2;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.project-item {
+			gap: 12px;
+			padding: 8px 8px;
+			border-radius: 12px;
+		}
+
+		.project-item h3 {
+			font-size: 16px;
+		}
+
+		.project-item p {
+			font-size: 13px;
+		}
+	}
+
+	/* ══════════════════════════════════════════════════════════
+	   MODAL - Estilo Contact
+	   ══════════════════════════════════════════════════════════ */
+	
+	.overlay {
+		--radius-modal: 22px;
+		--c-bg: rgba(248, 248, 250, 0.92);
+		--c-text: rgba(0, 0, 0, 0.86);
+		--c-subtle: rgba(0, 0, 0, 0.38);
+		--c-focus: #007aff;
+		--ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+		--ease-ios-out: cubic-bezier(0.32, 0.72, 0, 1);
+
+		position: fixed;
+		inset: 0;
+		z-index: 1000;
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+		padding: 0;
+		visibility: hidden;
+	}
+
+	.overlay.is-open {
+		visibility: visible;
+	}
+
+	.overlay.is-closing {
+		visibility: visible;
+	}
+
+	.overlay-backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0);
+		backdrop-filter: blur(0px);
+		-webkit-backdrop-filter: blur(0px);
+		transition: 
+			background 400ms var(--ease-ios),
+			backdrop-filter 500ms var(--ease-ios),
+			-webkit-backdrop-filter 500ms var(--ease-ios);
+	}
+
+	.overlay.is-open .overlay-backdrop {
+		background: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+	}
+
+	.overlay.is-closing .overlay-backdrop {
+		background: rgba(0, 0, 0, 0);
+		backdrop-filter: blur(0px);
+		-webkit-backdrop-filter: blur(0px);
+		transition: 
+			background 300ms var(--ease-ios),
+			backdrop-filter 350ms var(--ease-ios),
+			-webkit-backdrop-filter 350ms var(--ease-ios);
+	}
+
+	.modal-card {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		background: var(--c-bg);
+		backdrop-filter: blur(20px) saturate(180%);
+		-webkit-backdrop-filter: blur(20px) saturate(180%);
+		border-radius: var(--radius-modal) var(--radius-modal) 0 0;
+		overflow: visible;
+		display: flex;
+		flex-direction: column;
+		box-shadow:
+			0 -1px 0 0 rgba(255, 255, 255, 0.2),
+			0 -4px 20px rgba(0, 0, 0, 0.08),
+			0 -12px 40px rgba(0, 0, 0, 0.12);
+		transform: translateY(100%);
+		transition: transform 500ms var(--ease-ios);
+	}
+
+	.overlay.is-open .modal-card {
+		transform: translateY(0);
+	}
+
+	.overlay.is-closing .modal-card {
+		transform: translateY(100%);
+		transition: transform 350ms var(--ease-ios);
+	}
+
+	@media (min-width: 600px) {
+		.overlay {
+			align-items: center;
+			padding: 20px;
+		}
+		
+		.modal-card {
+			max-width: 420px;
+			border-radius: var(--radius-modal);
+			box-shadow:
+				0 0 0 0.5px rgba(255, 255, 255, 0.2),
+				0 8px 32px rgba(0, 0, 0, 0.12),
+				0 24px 60px rgba(0, 0, 0, 0.16);
+		}
+	}
+
+	.modal-surface {
+		position: relative;
+		padding: 30px 28px 26px;
+	}
+
+	.modal-header {
+		margin-bottom: 18px;
+	}
+
+	.header-eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--c-subtle);
+		margin-bottom: 6px;
+		opacity: 0.9;
+	}
+
+	.modal-card h2 {
+		margin: 0;
+		font-size: 1.6rem;
+		font-weight: 700;
+		letter-spacing: -0.035em;
+		line-height: 1.1;
+		color: var(--c-text);
+	}
+
+	/* Botón cerrar */
+	.overlay .close-btn {
+		position: absolute;
+		top: 18px;
+		right: 18px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		background: rgba(120, 120, 128, 0.14);
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		color: rgba(0, 0, 0, 0.44);
+		transition:
+			background 180ms var(--ease-out),
+			color 180ms var(--ease-out),
+			transform 180ms var(--ease-spring);
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.overlay .close-btn:hover {
+		background: rgba(120, 120, 128, 0.22);
+		color: rgba(0, 0, 0, 0.72);
+	}
+
+	.overlay .close-btn:active {
+		transform: scale(0.88);
+		background: rgba(120, 120, 128, 0.30);
+	}
+
+	/* Imagen del proyecto */
+	.project-modal-image {
+		border-radius: 14px;
+		overflow: hidden;
+		margin-bottom: 14px;
+		background: rgba(118, 118, 128, 0.06);
+		max-height: 200px;
+	}
+
+	.project-modal-image img {
+		width: 100%;
+		height: 100%;
+		max-height: 200px;
+		display: block;
+		border-radius: 14px;
+		object-fit: cover;
+	}
+
+	.project-modal-desc {
+		margin: 0 0 18px;
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		color: var(--c-subtle);
+		font-weight: 400;
+	}
+
+	.project-modal-techs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+	}
+
+	.tech-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		padding: 4px 10px;
+		font-size: 0.72rem;
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		border-radius: 16px;
+		background: rgba(0, 122, 255, 0.1);
+		color: rgba(0, 122, 255, 1);
+		white-space: nowrap;
+		transition: background 180ms ease;
+	}
+
+	.tech-chip img {
+		width: 12px !important;
+		height: 12px !important;
+		min-width: 12px;
+		max-width: 12px;
+		min-height: 12px;
+		max-height: 12px;
+		object-fit: contain;
+		flex-shrink: 0;
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const overlay  = document.getElementById('project-overlay') as HTMLElement;
+		const closeBtn = overlay?.querySelector('.close-btn');
+		const backdrop = overlay?.querySelector('.overlay-backdrop');
+
+		if (!overlay || !closeBtn) return;
+
+		/* ── Cerrar modal ── */
+		function closeModal() {
+			if (overlay.classList.contains('is-closing')) return;
+			overlay.classList.add('is-closing');
+			setTimeout(() => {
+				overlay.classList.remove('is-open', 'is-closing');
+				document.body.style.overflow = '';
+			}, 350);
+		}
+
+		closeBtn.addEventListener('click', closeModal);
+		backdrop?.addEventListener('click', closeModal);
+		
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
+				closeModal();
+			}
+		});
+
+		/* ── Abrir modal ── */
+		function openModal(el: HTMLElement) {
+			const titleEl  = document.getElementById('project-dialog-title');
+			const yearEl   = document.getElementById('project-dialog-year');
+			const imgEl    = document.getElementById('project-dialog-img') as HTMLImageElement | null;
+			const descEl   = document.getElementById('project-dialog-desc');
+			const techsEl  = document.getElementById('project-dialog-techs');
+
+			if (!titleEl || !imgEl || !descEl || !techsEl || !yearEl) return;
+
+			titleEl.textContent = el.dataset.name || '';
+			yearEl.textContent  = el.closest('.project-item')?.querySelector('p')?.textContent || '';
+			imgEl.src           = el.dataset.image || '';
+			imgEl.alt           = `${el.dataset.name} preview`;
+			descEl.textContent  = el.dataset.description || '';
+
+			techsEl.innerHTML = '';
+			techsEl.style.cssText = 'display: flex; flex-wrap: wrap; gap: 6px;';
+			
+			// Mapeo de tecnologías a slugs de Simple Icons
+			const techIcons: Record<string, string> = {
+				'React': 'react',
+				'React.js': 'react',
+				'JavaScript': 'javascript',
+				'TypeScript': 'typescript',
+				'Node.js': 'nodedotjs',
+				'Next.js': 'nextdotjs',
+				'Astro': 'astro',
+				'Tailwind CSS': 'tailwindcss',
+				'MongoDB': 'mongodb',
+				'PostgreSQL': 'postgresql',
+				'Express': 'express',
+				'NestJS': 'nestjs',
+				'Socket.IO': 'socketdotio',
+				'Google Maps API': 'googlemaps',
+				'Axios': 'axios',
+				'Material Design': 'materialdesign',
+				'Prisma': 'prisma',
+				'Expo': 'expo',
+				'TensorFlow': 'tensorflow',
+				'AI': 'openai',
+				'Git': 'git',
+				'Strapi': 'strapi',
+				'Shadcn': 'shadcnui',
+				'SupaBase': 'supabase',
+				'WhatsApp.js': 'whatsapp',
+				'Puppeteer': 'puppeteer',
+				'Docker': 'docker',
+				'Mongoose': 'mongoose',
+				'JWT': 'jsonwebtokens',
+				'MySQL': 'mysql',
+				'HTML': 'html5',
+				'CSS': 'css3',
+				'PHP': 'php',
+			};
+			
+			try {
+				const techs: string[] = JSON.parse(el.dataset.techs || '[]');
+				techs.forEach(t => {
+					const span = document.createElement('span');
+					span.style.cssText = `
+						display: inline-flex;
+						align-items: center;
+						gap: 5px;
+						padding: 4px 10px;
+						font-size: 0.72rem;
+						font-weight: 500;
+						letter-spacing: 0.01em;
+						border-radius: 16px;
+						background: rgba(0, 122, 255, 0.1);
+						color: rgba(0, 122, 255, 1);
+						white-space: nowrap;
+					`;
+					
+					const iconSlug = techIcons[t];
+					if (iconSlug) {
+						const img = document.createElement('img');
+						img.src = `https://cdn.simpleicons.org/${iconSlug}/007AFF`;
+						img.alt = '';
+						img.loading = 'lazy';
+						img.style.cssText = 'width: 12px; height: 12px; object-fit: contain; flex-shrink: 0;';
+						span.appendChild(img);
+					}
+					
+					const text = document.createTextNode(t);
+					span.appendChild(text);
+					techsEl.appendChild(span);
+				});
+			} catch { /* ignore */ }
+
+			// Botones de acción
+			const actionsEl = document.getElementById('project-dialog-actions');
+			if (actionsEl) {
+				actionsEl.innerHTML = '';
+				actionsEl.style.cssText = 'display: flex; gap: 10px; margin-top: 16px;';
+				
+				const repo = el.dataset.repo || '';
+				const url = el.dataset.url || '';
+				
+				if (repo) {
+					const repoBtn = document.createElement('a');
+					repoBtn.href = repo;
+					repoBtn.target = '_blank';
+					repoBtn.rel = 'noopener noreferrer';
+					repoBtn.style.cssText = `
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						gap: 6px;
+						padding: 10px 16px;
+						font-size: 0.8rem;
+						font-weight: 500;
+						border-radius: 12px;
+						background: rgba(0, 0, 0, 0.05);
+						color: rgba(0, 0, 0, 0.6);
+						text-decoration: none;
+						transition: all 180ms ease;
+						flex: 1;
+					`;
+					repoBtn.innerHTML = `
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+							<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+						</svg>
+						GitHub
+					`;
+					actionsEl.appendChild(repoBtn);
+				}
+				
+				if (url) {
+					const urlBtn = document.createElement('a');
+					urlBtn.href = url;
+					urlBtn.target = '_blank';
+					urlBtn.rel = 'noopener noreferrer';
+					urlBtn.style.cssText = `
+						display: inline-flex;
+						align-items: center;
+						justify-content: center;
+						gap: 6px;
+						padding: 10px 16px;
+						font-size: 0.8rem;
+						font-weight: 500;
+						border-radius: 12px;
+						background: rgba(0, 122, 255, 0.1);
+						color: rgba(0, 122, 255, 1);
+						text-decoration: none;
+						transition: all 180ms ease;
+						flex: 1;
+					`;
+					urlBtn.innerHTML = `
+						<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+							<polyline points="15 3 21 3 21 9"/>
+							<line x1="10" y1="14" x2="21" y2="3"/>
+						</svg>
+						Ver sitio
+					`;
+					actionsEl.appendChild(urlBtn);
+				}
+			}
+
+			document.body.style.overflow = 'hidden';
+			overlay.classList.add('is-open');
+		}
+
+		/* ── Hover preview ── */
+		const STRENGTH = 30;
+		const TILT_STRENGTH = 8;
+		const LERP = 0.13;
+		const preview = document.getElementById('shared-preview') as HTMLElement | null;
+		const previewInner = preview?.querySelector('.preview-inner') as HTMLElement | null;
+		const previewImg = preview?.querySelector('img') as HTMLImageElement | null;
+
+		let targetX = 0, targetY = 0;
+		let currentX = 0, currentY = 0;
+		let tiltX = 0, tiltY = 0;
+		let currentTiltX = 0, currentTiltY = 0;
+		let isHovering = false;
+		let rafId: number | null = null;
+		let currentSrc = '';
+		let leaveTimer: ReturnType<typeof setTimeout> | null = null;
+
+		function animate() {
+			currentX += (targetX - currentX) * LERP;
+			currentY += (targetY - currentY) * LERP;
+			currentTiltX += (tiltX - currentTiltX) * LERP;
+			currentTiltY += (tiltY - currentTiltY) * LERP;
+
+			preview?.style.setProperty('--mx', `${currentX}px`);
+			preview?.style.setProperty('--my', `${currentY}px`);
+			previewInner?.style.setProperty('--rotX', `${-currentTiltY}deg`);
+			previewInner?.style.setProperty('--rotY', `${currentTiltX}deg`);
+
+			const stillMoving =
+				Math.abs(targetX - currentX) > 0.05 ||
+				Math.abs(targetY - currentY) > 0.05 ||
+				Math.abs(tiltX - currentTiltX) > 0.05 ||
+				Math.abs(tiltY - currentTiltY) > 0.05;
+
+			if (isHovering || stillMoving) {
+				rafId = requestAnimationFrame(animate);
+			} else {
+				rafId = null;
+			}
+		}
+
+		function startLoop() {
+			if (rafId === null) {
+				rafId = requestAnimationFrame(animate);
+			}
+		}
+
+		/* ── Event listeners para items ── */
+		document.querySelectorAll('[data-has-image]').forEach((item) => {
+			const el = item as HTMLElement;
+
+			item.addEventListener('click', () => {
+				if (overlay.classList.contains('is-closing')) return;
+				openModal(el);
+			});
+
+			item.addEventListener('mouseenter', () => {
+				if (leaveTimer) {
+					clearTimeout(leaveTimer);
+					leaveTimer = null;
+				}
+
+				const src = el.dataset.image || '';
+				const name = el.dataset.name || '';
+
+				if (src && previewImg && previewInner && src !== currentSrc) {
+					previewImg.style.opacity = '0';
+					previewInner.style.setProperty('--scale', '0.88');
+					setTimeout(() => {
+						previewImg.src = src;
+						previewImg.alt = `${name} preview`;
+						currentSrc = src;
+						previewImg.style.opacity = '1';
+						previewInner.style.setProperty('--scale', '1');
+					}, isHovering ? 160 : 0);
+				}
+
+				isHovering = true;
+				el.classList.add('has-image');
+				preview?.classList.add('visible');
+				startLoop();
+			});
+
+			item.addEventListener('mousemove', (e) => {
+				const rect = el.getBoundingClientRect();
+				const x = ((e as MouseEvent).clientX - rect.left) / rect.width;
+				const y = ((e as MouseEvent).clientY - rect.top) / rect.height;
+				targetX = (x - 0.5) * STRENGTH * 2;
+				targetY = (y - 0.5) * STRENGTH * 2;
+				tiltX = (x - 0.5) * TILT_STRENGTH * 2;
+				tiltY = (y - 0.5) * TILT_STRENGTH * 2;
+			});
+
+			item.addEventListener('mouseleave', () => {
+				el.classList.remove('has-image');
+				leaveTimer = setTimeout(() => {
+					isHovering = false;
+					preview?.classList.remove('visible');
+					targetX = 0;
+					targetY = 0;
+					tiltX = 0;
+					tiltY = 0;
+					startLoop();
+					setTimeout(() => { currentSrc = ''; }, 400);
+				}, 80);
+			});
+		});
+	});
+</script>

@@ -1,0 +1,119 @@
+<div class="buttons">
+    <a class="contactar" href="mailto:haderrenteria13az@gmail.com">Contactar</a>
+    <a class="cv" href="/HaderRenteriaCV.pdf" target="_blank">Ver CV</a>
+</div>
+
+<style>
+    .buttons {
+        position: fixed;
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        z-index: 10;
+        padding: 6px;
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.45);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        backdrop-filter: blur(20px) saturate(180%);
+        box-shadow:
+            0 0 0 0.5px rgba(0, 0, 0, 0.06),
+            0 2px 8px rgba(0, 0, 0, 0.06),
+            0 8px 24px rgba(0, 0, 0, 0.08);
+        opacity: 0;
+        animation: buttonsSlideUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.9s forwards;
+    }
+
+    .buttons a {
+        padding: 14px 72px;
+        font-size: 15px;
+        border: none;
+        border-radius: 100px;
+        cursor: pointer;
+        font-weight: 500;
+        font-family: 'SF Pro Display', sans-serif;
+        text-decoration: none;
+        transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        position: relative;
+        overflow: hidden;
+        letter-spacing: 0.01em;
+    }
+
+    .buttons .contactar {
+        background-color: transparent;
+        color: #1c1c1e;
+    }
+
+    .buttons .contactar:hover {
+        background-color: rgba(120, 120, 128, 0.1);
+    }
+
+    .buttons .cv {
+        background-color: #1c1c1e;
+        color: #FFFFFF;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .buttons .cv:hover {
+        background-color: #000;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .buttons .cv:active {
+        transform: translateY(0) scale(0.98);
+    }
+
+    .buttons .contactar:active {
+        transform: scale(0.97);
+    }
+
+    @keyframes buttonsSlideUp {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+
+    @media (max-width: 900px) {
+        .buttons {
+            bottom: 24px;
+        }
+
+        .buttons a {
+            padding: 12px 36px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .buttons {
+            bottom: 16px;
+            padding: 4px;
+            gap: 4px;
+        }
+
+        .buttons a {
+            padding: 11px 20px;
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .buttons {
+            padding: 3px;
+            gap: 3px;
+        }
+
+        .buttons a {
+            padding: 10px 16px;
+            font-size: 12px;
+        }
+    }
+</style>
