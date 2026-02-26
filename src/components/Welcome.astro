@@ -6,322 +6,326 @@ import instagram from '../assets/ig.webp';
 import Projects from './Projects.astro';
 
 const socialLinks = [
-    {
-        href: "https://www.linkedin.com/in/haderrenteria",
-        name: "Linkedin",
-        src: linkedin.src,
-        alt: "Linkedin",
-        class: "linkedin",
-    },
-    {
-        href: "https://www.instagram.com/hader_____13",
-        name: "Instagram",
-        src: instagram.src,
-        alt: "Instagram",
-        class: "instagram",
-    },
-    {
-        href: "https://github.com/haderrenteria13",
-        name: "Github",
-        src: github.src,
-        alt: "Github",
-        class: "github",
-    },
+	{
+		href: 'https://www.linkedin.com/in/haderrenteria',
+		name: 'Linkedin',
+		src: linkedin.src,
+		alt: 'Linkedin',
+		class: 'linkedin',
+	},
+	{
+		href: 'https://www.instagram.com/hader_____13',
+		name: 'Instagram',
+		src: instagram.src,
+		alt: 'Instagram',
+		class: 'instagram',
+	},
+	{
+		href: 'https://github.com/haderrenteria13',
+		name: 'Github',
+		src: github.src,
+		alt: 'Github',
+		class: 'github',
+	},
 ];
 ---
 
 <div id="container">
-    <main>
-        <Projects />
-        <section id="hero">
-            <span class="greeting">Hola, soy</span>
-            <h1>Hader Renteria</h1>
-            <h2>Software Developer & AI</h2>
-            <section id="links">
-                {socialLinks.map((link, index) => (
-                    <a 
-                        href={link.href} 
-                        class="social-link" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        style={`--delay: ${index * 0.1}s`}
-                    >
-                        <img src={link.src} alt={link.alt} class={link.class} />
-                        <p>{link.name}</p>
-                    </a>
-                ))}
-            </section>
-        </section>
-    </main>
+	<main>
+		<Projects />
+		<section id="hero">
+			<span class="greeting">Hola, soy</span>
+			<h1>Hader Renteria</h1>
+			<h2>Software Developer & AI</h2>
+			<section id="links">
+				{
+					socialLinks.map((link, index) => (
+						<a
+							href={link.href}
+							class="social-link"
+							target="_blank"
+							rel="noopener noreferrer"
+							style={`--delay: ${index * 0.1}s`}
+						>
+							<img src={link.src} alt={link.alt} class={link.class} />
+							<p>{link.name}</p>
+						</a>
+					))
+				}
+			</section>
+		</section>
+	</main>
 </div>
 
 <style>
-    /* ══════════════════════════════════════════════════════════
-       ANIMACIÓN DE ENTRADA
-       ══════════════════════════════════════════════════════════ */
-    @keyframes heroReveal {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-            filter: blur(8px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-    }
+	@keyframes heroReveal {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+			filter: blur(8px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+			filter: blur(0);
+		}
+	}
 
-    #container {
-        height: 100%;
-    }
+	#container {
+		flex: 1;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 
-    main {
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 120px;
-        padding: 0 60px;
-    }
+	main {
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 1200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 100px;
+		padding: 40px 60px;
+		margin: auto;
+	}
 
-    #hero {
-        display: flex;
-        align-items: start;
-        flex-direction: column;
-        justify-content: center;
-        transition: opacity 0.35s ease, filter 0.35s ease;
-    }
+	#hero {
+		display: flex;
+		align-items: start;
+		flex-direction: column;
+		justify-content: center;
+		transition:
+			opacity 0.35s ease,
+			filter 0.35s ease;
+	}
 
-    main:has(.has-image:hover) #hero {
-        opacity: 0.08;
-        filter: blur(6px);
-    }
+	main:has(.has-image:hover) #hero {
+		opacity: 0.08;
+		filter: blur(6px);
+	}
 
-    /* ── Aplicando la animación a los textos ── */
-    .greeting {
-        font-size: 20px;
-        color: #AEAEB2;
-        font-weight: 400;
-        margin-bottom: 6px;
-        opacity: 0;
-        animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
-    }
+	.greeting {
+		font-size: 20px;
+		color: #aeaeb2;
+		font-weight: 400;
+		margin-bottom: 6px;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+	}
 
-    h1 {
-        font-size: 70px;
-        font-weight: 500;
-        margin: 0;
-        line-height: 1;
-        opacity: 0;
-        animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
-    }
-    
-    h2 {
-        margin: 12px 0 0 0;
-        font-weight: 400;
-        color: #AEAEB2;
-        font-size: 27px;
-        opacity: 0;
-        animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
-    }
+	h1 {
+		font-size: 70px;
+		font-weight: 500;
+		margin: 0;
+		line-height: 1;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+	}
 
-    #links {
-        display: flex;
-        gap: 16px;
-        margin-top: 32px;
-    }
+	h2 {
+		margin: 12px 0 0 0;
+		font-weight: 400;
+		color: #aeaeb2;
+		font-size: 27px;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+	}
 
-    /* ── Aplicando la animación a los iconos sociales ── */
-    #links .social-link {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 4px;
-        position: relative;
-        padding-bottom: 10px;
-        text-decoration: none;
-        color: inherit;
-        opacity: 0;
-        /* Comienza después del h2 (0.55s) + el delay individual de cada icono */
-        animation: heroReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(0.55s + var(--delay)) forwards;
-    }
+	#links {
+		display: flex;
+		gap: 16px;
+		margin-top: 32px;
+	}
 
-    #links .social-link:nth-child(2) p {
-        top: 72px;
-    }
+	#links .social-link {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		position: relative;
+		padding-bottom: 10px;
+		text-decoration: none;
+		color: inherit;
+		opacity: 0;
+		animation: heroReveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) calc(0.55s + var(--delay)) forwards;
+	}
 
-    #links .social-link:nth-child(3) p {
-        left: calc(50% - 8px);
-    }
+	#links .social-link:nth-child(2) p {
+		top: 72px;
+	}
 
-    #links .social-link:nth-child(3) p {
-        top: 75px;
-    }
+	#links .social-link:nth-child(3) p {
+		left: calc(50% - 8px);
+	}
 
-    #links .social-link p {
-        margin: 0;
-        font-size: 16px;
-        position: absolute;
-        left: 50%;
-        bottom: 4px;
-        white-space: nowrap;
-        opacity: 0;
-        transform: translate(-50%, 6px);
-        transition: opacity 220ms ease, transform 220ms ease;
-    }
+	#links .social-link:nth-child(3) p {
+		top: 75px;
+	}
 
-    #links .social-link:hover p {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
+	#links .social-link p {
+		margin: 0;
+		font-size: 16px;
+		position: absolute;
+		left: 50%;
+		bottom: 4px;
+		white-space: nowrap;
+		opacity: 0;
+		transform: translate(-50%, 6px);
+		transition:
+			opacity 220ms ease,
+			transform 220ms ease;
+	}
 
-    #links img {
-        width: 70px;
-        height: 70px;
-        transition: transform 300ms ease;
-    
-    }
+	#links .social-link:hover p {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
 
-    #links .social-link:nth-child(3) img {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .linkedin {
-        transform: rotate(-6.35deg);
-    }
+	#links img {
+		width: 70px;
+		height: 70px;
+		transition: transform 300ms ease;
+	}
 
-    #links .social-link:hover .linkedin {
-        transform: translateY(-12px) rotate(-16deg);
-    }
+	#links .social-link:nth-child(3) img {
+		width: 80px;
+		height: 80px;
+	}
 
-    .instagram {
-        transform: rotate(4.99deg);
-        position: relative;
-        top: 10px;
-    }
+	.linkedin {
+		transform: rotate(-6.35deg);
+	}
 
-    #links .social-link:hover .instagram {
-        transform: translateY(-14px) rotate(16deg);
-    }
+	#links .social-link:hover .linkedin {
+		transform: translateY(-12px) rotate(-16deg);
+	}
 
-    .github {
-        transform: rotate(6.08deg);
-    }
+	.instagram {
+		transform: rotate(4.99deg);
+		position: relative;
+		top: 10px;
+	}
 
-    #links .social-link:hover .github {
-        transform: translateY(-12px) rotate(18deg);
-    }
+	#links .social-link:hover .instagram {
+		transform: translateY(-14px) rotate(16deg);
+	}
 
-    /* ══════════════════════════════════════════════════════════
-       RESPONSIVE
-       ══════════════════════════════════════════════════════════ */
+	.github {
+		transform: rotate(6.08deg);
+	}
 
-    @media (max-width: 900px) {
-        main {
-            flex-direction: column-reverse;
-            gap: 36px;
-            padding: 50px 20px 90px;
-            height: auto;
-            min-height: 100%;
-            align-items: center;
-        }
+	#links .social-link:hover .github {
+		transform: translateY(-12px) rotate(18deg);
+	}
 
-        #hero {
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
+	@media (max-width: 900px) {
+		main {
+			flex-direction: column-reverse;
+			gap: 48px;
+			padding: 40px 20px 100px;
+			height: auto;
+			min-height: 100%;
+			justify-content: center;
+			align-items: center;
+		}
 
-        h1 {
-            font-size: 38px;
-        }
+		#hero {
+			align-items: center;
+			text-align: center;
+			width: 100%;
+		}
 
-        h2 {
-            font-size: 16px;
-        }
+		h1 {
+			font-size: 38px;
+		}
 
-        .greeting {
-            font-size: 14px;
-        }
+		h2 {
+			font-size: 16px;
+		}
 
-        #links {
-            justify-content: center;
-            margin-top: 24px;
-            gap: 12px;
-        }
+		.greeting {
+			font-size: 14px;
+		}
 
-        #links img {
-            width: 48px;
-            height: 48px;
-        }
+		#links {
+			justify-content: center;
+			margin-top: 24px;
+			gap: 12px;
+		}
 
-        #links .social-link:nth-child(3) img {
-            width: 54px;
-            height: 54px;
-        }
+		#links img {
+			width: 48px;
+			height: 48px;
+		}
 
-        .instagram {
-            top: 4px;
-        }
+		#links .social-link:nth-child(3) img {
+			width: 54px;
+			height: 54px;
+		}
 
-        #links .social-link:nth-child(2) p {
-            top: 58px;
-        }
+		.instagram {
+			top: 4px;
+		}
 
-        #links .social-link:nth-child(3) p {
-            top: 62px;
-        }
-    }
+		#links .social-link:nth-child(2) p {
+			top: 58px;
+		}
 
-    @media (max-width: 480px) {
-        main {
-            padding: 40px 16px 80px;
-            gap: 28px;
-        }
+		#links .social-link:nth-child(3) p {
+			top: 62px;
+		}
+	}
 
-        h1 {
-            font-size: 30px;
-        }
+	@media (max-width: 480px) {
+		main {
+			padding: 40px 16px 80px;
+			gap: 28px;
+		}
 
-        h2 {
-            font-size: 14px;
-        }
+		h1 {
+			font-size: 30px;
+		}
 
-        .greeting {
-            font-size: 12px;
-        }
+		h2 {
+			font-size: 14px;
+		}
 
-        #links {
-            gap: 8px;
-            margin-top: 18px;
-        }
+		.greeting {
+			font-size: 12px;
+		}
 
-        #links img {
-            width: 40px;
-            height: 40px;
-        }
+		#links {
+			gap: 8px;
+			margin-top: 18px;
+		}
 
-        #links .social-link:nth-child(3) img {
-            width: 46px;
-            height: 46px;
-        }
+		#links img {
+			width: 40px;
+			height: 40px;
+		}
 
-        #links .social-link p {
-            font-size: 11px;
-        }
+		#links .social-link:nth-child(3) img {
+			width: 46px;
+			height: 46px;
+		}
 
-        #links .social-link:nth-child(2) p {
-            top: 50px;
-        }
+		#links .social-link p {
+			font-size: 11px;
+		}
 
-        #links .social-link:nth-child(3) p {
-            top: 54px;
-        }
+		#links .social-link:nth-child(2) p {
+			top: 50px;
+		}
 
-        .instagram {
-            top: 3px;
-        }
-    }
+		#links .social-link:nth-child(3) p {
+			top: 54px;
+		}
+
+		.instagram {
+			top: 3px;
+		}
+	}
 </style>

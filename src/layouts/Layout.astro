@@ -4,13 +4,13 @@ interface Props {
 	description?: string;
 }
 
-const { 
-	title = "Hader Renteria | Software Developer",
-	description = "Desarrollador de software especializado en aplicaciones web y móviles. Creo soluciones digitales con React, Node.js, Astro y más tecnologías modernas."
+const {
+	title = 'Hader Renteria | Software Developer',
+	description = 'Desarrollador de software especializado en aplicaciones web y móviles. Creo soluciones digitales con React, Node.js, Astro y más tecnologías modernas.',
 } = Astro.props;
 
-const siteUrl = "https://haderrenteria.tech"; 
-const ogImage = `${siteUrl}/og-image.png`; 
+const siteUrl = 'https://haderrenteria.tech';
+const ogImage = `${siteUrl}/og-image.png`;
 ---
 
 <!doctype html>
@@ -18,25 +18,24 @@ const ogImage = `${siteUrl}/og-image.png`;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		
-		<!-- Favicon -->
+
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-		
-		<!-- SEO Básico -->
+
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		<meta name="author" content="Hader Renteria" />
-		<meta name="keywords" content="desarrollador web, software developer, React, Node.js, Astro, TypeScript, Colombia, portafolio, frontend, backend, full stack" />
+		<meta
+			name="keywords"
+			content="desarrollador web, software developer, React, Node.js, Astro, TypeScript, Colombia, portafolio, frontend, backend, full stack"
+		/>
 		<meta name="robots" content="index, follow" />
 		<link rel="canonical" href={siteUrl} />
-		
-		<!-- Theme -->
+
 		<meta name="theme-color" content="#ffffff" />
 		<meta name="color-scheme" content="light" />
-		
-		<!-- Open Graph / Facebook -->
+
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={siteUrl} />
 		<meta property="og:title" content={title} />
@@ -44,54 +43,54 @@ const ogImage = `${siteUrl}/og-image.png`;
 		<meta property="og:image" content={ogImage} />
 		<meta property="og:locale" content="es_CO" />
 		<meta property="og:site_name" content="Hader Renteria" />
-		
-		<!-- Twitter -->
+
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:url" content={siteUrl} />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImage} />
-		
-		<!-- Fonts -->
+
 		<link rel="preconnect" href="https://fonts.cdnfonts.com" />
-		<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-		
-		<!-- Structured Data -->
-		<script type="application/ld+json">
-		{
-			"@context": "https://schema.org",
-			"@type": "Person",
-			"name": "Hader Renteria",
-			"url": "https://haderrenteria.tech",
-			"jobTitle": "Software Developer",
-			"description": "Desarrollador de software especializado en aplicaciones web y móviles",
-			"sameAs": [
-				"https://github.com/haderrenteria13",
-				"https://linkedin.com/in/haderrenteria"
-			],
-			"knowsAbout": ["React", "Node.js", "TypeScript", "Astro", "MongoDB", "PostgreSQL"]
-		}
-		</script>
+		<link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet" />
+
+		<script
+			type="application/ld+json"
+			set:html={JSON.stringify({
+				'@context': 'https://schema.org',
+				'@type': 'Person',
+				name: 'Hader Renteria',
+				url: 'https://haderrenteria.tech',
+				jobTitle: 'Software Developer',
+				description: 'Desarrollador de software especializado en aplicaciones web y móviles',
+				sameAs: ['https://github.com/haderrenteria13', 'https://linkedin.com/in/haderrenteria'],
+				knowsAbout: ['React', 'Node.js', 'TypeScript', 'Astro', 'MongoDB', 'PostgreSQL'],
+			})}
+		/>
 	</head>
 	<body>
 		<slot />
+		<style is:global>
+			*,
+			*::before,
+			*::after {
+				box-sizing: border-box;
+			}
+
+			html,
+			body {
+				margin: 0;
+				width: 100%;
+				min-height: 100vh;
+				overflow-x: hidden;
+				display: flex;
+				flex-direction: column;
+				font-family: 'SF Pro Display', sans-serif;
+				background-color: #fbfbfd;
+			}
+
+			body {
+				position: relative;
+			}
+		</style>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		overflow-x: hidden;
-		overflow-y: hidden;
-		display: flex;
-		flex-direction: column;
-		font-family: 'SF Pro Display', sans-serif;
-	}
-
-	body {
-		position: relative;
-	}
-</style>
