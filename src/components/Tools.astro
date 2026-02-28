@@ -125,7 +125,7 @@ const topGridTools = [
 	'js', 'python', 'react', 'nextjs', 
 	'html', 'css', 'tailwind', 'astro',
 	'node', 'sql', 'git', 'figma',
-	'django', 'nestjs', 'nest', 'php', 'bootstrap'
+	'django', 'nestjs', 'php', 'bootstrap'
 ];
 
 const toolsData: Record<string, any> = {};
@@ -301,7 +301,8 @@ const renderedGridItems = topGridTools
 		position: relative;
 		width: 100%;
 		height: auto;
-		aspect-ratio: 4/3;
+		aspect-ratio: 1/1;
+		margin-top: -10px;
 		max-height: 100%;
 		transition: opacity 0.35s ease, transform 0.35s ease;
 		overflow: visible;
@@ -419,6 +420,21 @@ const renderedGridItems = topGridTools
 			margin-right: -24px;
 			padding-left: 24px;
 			padding-right: 24px;
+			scroll-snap-type: x mandatory;
+			scroll-padding-left: 24px;
+			-webkit-overflow-scrolling: touch;
+			mask-image: linear-gradient(to right, 
+				transparent, 
+				black 24px, 
+				black calc(100% - 32px), 
+				transparent 100%
+			);
+			-webkit-mask-image: linear-gradient(to right, 
+				transparent, 
+				black 24px, 
+				black calc(100% - 32px), 
+				transparent 100%
+			);
 		}
 
 		.tools-list::-webkit-scrollbar {
@@ -428,11 +444,13 @@ const renderedGridItems = topGridTools
 		:global(.tools-group) {
 			margin-bottom: 0;
 			flex: 0 0 auto;
+			scroll-snap-align: start;
 		}
 
 		:global(.tools-group-items) {
 			display: flex;
 			gap: 4px;
+			flex-wrap: nowrap;
 		}
 
 		:global(.tool-name) {
@@ -458,6 +476,8 @@ const renderedGridItems = topGridTools
 
 		.tools-grid {
 			min-height: 280px;
+			aspect-ratio: 3/4;
+			margin-top: 0;
 		}
 
 		.tools-detail-icon {
@@ -490,23 +510,17 @@ const renderedGridItems = topGridTools
 		const gridWidth = toolsGrid ? toolsGrid.offsetWidth : 400;
 		const isMobile = window.innerWidth <= 768;
 		
-		const baseSize = gridWidth * (isMobile ? 0.22 : 0.18); 
+		const baseSize = gridWidth * (isMobile ? 0.20 : 0.18); 
 
 		const positions = [];
-		const cols = isMobile ? 3 : 4;
-		const rows = isMobile ? 4 : 3;
-		
-		const totalRowsNeeded = Math.ceil(topGridTools.length / cols);
-		
-		const rowOverflow = totalRowsNeeded - rows; 
-		const verticalOffsetPct = (rowOverflow / rows / 4.5) * 100;
+		const cols = 4;
+		const rows = Math.ceil(topGridTools.length / cols);
 
 		for (let i = 0; i < topGridTools.length; i++) {
 			const row = Math.floor(i / cols);
 			const col = i % cols;
 			const baseX = ((col + 0.5) / cols) * 100;
-			
-			const baseY = (((row + 0.5) / rows) * 100) - verticalOffsetPct;
+			const baseY = ((row + 0.5) / rows) * 100;
 			
 			const jitterX = (37 * i) % 4 - 2;
 			const jitterY = (17 * i) % 4 - 2;
@@ -584,11 +598,12 @@ const renderedGridItems = topGridTools
 		window.addEventListener('resize', () => {
 			gridRect = toolsGrid.getBoundingClientRect();
 			const isMobile = window.innerWidth <= 768;
-			const newBaseSize = gridRect.width * (isMobile ? 0.22 : 0.18);
+			const newBaseSize = gridRect.width * (isMobile ? 0.20 : 0.18);
 			toolIconItems.forEach((el, i) => {
 				const sizeFactor = 1.1 + ((i * 13) % 10) / 100;
 				el.style.width = (newBaseSize * sizeFactor) + 'px';
 				el.style.height = (newBaseSize * sizeFactor) + 'px';
+				el.style.display = 'block';
 			});
 		});
 
@@ -603,6 +618,7 @@ const renderedGridItems = topGridTools
 			el.dataset.amp = pos.amp || 1;
 			el.style.width = pos.size + 'px';
 			el.style.height = pos.size + 'px';
+			el.style.display = 'block';
 		});
 
 		function updateIcons() {

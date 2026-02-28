@@ -561,6 +561,7 @@ const projects = [
 		display: block;
 		border-radius: 14px;
 		object-fit: cover;
+		transition: opacity 0.3s ease;
 	}
 
 	.project-modal-desc {
@@ -643,8 +644,14 @@ const projects = [
 
 			if (!titleEl || !imgEl || !descEl || !techsEl || !yearEl) return;
 
+			imgEl.style.opacity = '0';
+
 			titleEl.textContent = el.dataset.name || '';
 			yearEl.textContent = el.closest('.project-item')?.querySelector('p')?.textContent || '';
+			
+			imgEl.onload = () => {
+				imgEl.style.opacity = '1';
+			};
 			imgEl.src = el.dataset.image || '';
 			imgEl.alt = `${el.dataset.name} preview`;
 			descEl.textContent = el.dataset.description || '';
