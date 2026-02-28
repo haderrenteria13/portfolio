@@ -159,6 +159,11 @@ const renderedGridItems = topGridTools
 							))}
 						</div>
 						<div class="tools-detail" id="toolsDetail" aria-live="polite" aria-hidden="true">
+							<button class="tools-detail-close" id="toolsDetailClose" aria-label="Cerrar detalle">
+								<svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+									<path d="M9.5 1.5L1.5 9.5M1.5 1.5l8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></path>
+								</svg>
+							</button>
 							<img class="tools-detail-icon" src="" alt="" aria-hidden="true" loading="lazy" decoding="async" decoding="async" />
 							<h3 class="tools-detail-name" aria-label="Detalle de la herramienta">&nbsp;</h3>
 							<p class="tools-detail-desc" aria-hidden="true">&nbsp;</p>
@@ -364,6 +369,41 @@ const renderedGridItems = topGridTools
 		z-index: 10;
 	}
 
+	.tools-detail-close {
+		position: absolute;
+		top: -12px;
+		right: -12px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		background: rgba(120, 120, 128, 0.14);
+		border: none;
+		border-radius: 50%;
+		cursor: pointer;
+		color: rgba(0, 0, 0, 0.44);
+		opacity: 0;
+		transition: opacity 0.3s ease, background 180ms ease, color 180ms ease, transform 180ms cubic-bezier(0.32, 0.72, 0, 1);
+		pointer-events: none;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.tools-detail.is-visible .tools-detail-close {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.tools-detail-close:hover {
+		background: rgba(120, 120, 128, 0.22);
+		color: rgba(0, 0, 0, 0.72);
+	}
+
+	.tools-detail-close:active {
+		transform: scale(0.88);
+		background: rgba(120, 120, 128, 0.3);
+	}
+
 	.tools-detail-icon {
 		width: 160px;
 		height: 160px;
@@ -459,6 +499,8 @@ const renderedGridItems = topGridTools
 			font-size: 14px;
 			border-radius: 980px;
 			background: rgba(0, 0, 0, 0.04);
+			color: var(--text-secondary) !important;
+			font-weight: 400 !important;
 		}
 
 		:global(.tool-name.active) {
@@ -547,6 +589,7 @@ const renderedGridItems = topGridTools
 		const toolsList = document.getElementById('toolsList');
 		const toolsGrid = document.getElementById('toolsGrid');
 		const toolsDetail = document.getElementById('toolsDetail');
+		const toolsDetailClose = document.getElementById('toolsDetailClose');
 
 		if (!toolsList || !toolsGrid || !toolsDetail) return;
 		
@@ -716,5 +759,11 @@ const renderedGridItems = topGridTools
 				if (el.dataset.tool) selectTool(el.dataset.tool);
 			});
 		});
+
+		if (toolsDetailClose) {
+			toolsDetailClose.addEventListener('click', () => {
+				deselectTool();
+			});
+		}
 	});
 </script>
