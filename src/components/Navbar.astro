@@ -1,0 +1,205 @@
+<header class="site-header">
+	<nav class="nav" aria-label="Primary" id="navbar">
+		<div class="nav-content">
+			<a href="/" class="nav-logo" id="nav-logo">Hader Renteria</a>
+			
+			<button class="mobile-menu-btn" aria-label="Menu" id="mobile-menu-btn">
+				<span class="line line-1"></span>
+				<span class="line line-2"></span>
+			</button>
+
+			<div class="nav-links" id="nav-links">
+				<a href="#projects">Proyectos</a>
+				<a href="#about">Sobre mí</a>
+				<a href="#tools">Stack</a>
+				<a href="#contact">Contacto</a>
+			</div>
+		</div>
+	</nav>
+</header>
+
+<style>
+	.nav {
+		--nav-height: 48px;
+		--site-gutter: 48px;
+		--text-primary: #1d1d1f;
+		--text-nav: rgba(0, 0, 0, .8);
+
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: var(--nav-height);
+		background-color: rgba(255, 255, 255, 0.65);
+		backdrop-filter: saturate(180%) blur(20px);
+		-webkit-backdrop-filter: saturate(180%) blur(20px);
+		border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+		box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+		z-index: 9999;
+		transition: background-color 0.3s ease, height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.nav-content {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 var(--site-gutter);
+		height: var(--nav-height);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		z-index: 2;
+	}
+
+	.nav-logo {
+		font-size: 18px;
+		font-weight: 500;
+		color: var(--text-primary);
+		text-decoration: none;
+		z-index: 3;
+	}
+
+	.nav-links {
+		display: flex;
+		gap: 32px;
+	}
+
+	.nav-links a {
+		font-size: 14px;
+		color: var(--text-nav);
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+
+	.nav-links a:hover {
+		opacity: 0.7;
+	}
+
+	.mobile-menu-btn {
+		display: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 10px;
+		z-index: 3;
+		position: relative;
+		width: 40px;
+		height: 40px;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		gap: 4px;
+		-webkit-tap-highlight-color: transparent;
+	}
+
+	.line {
+		display: block;
+		width: 16px;
+		height: 1.5px;
+		background-color: var(--text-primary);
+		transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+		border-radius: 2px;
+	}
+
+	@media (max-width: 768px) {
+		.nav {
+			--site-gutter: 20px;
+		}
+
+		.mobile-menu-btn {
+			display: flex;
+		}
+
+		.nav-links {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100vh;
+			background-color: #fbfbfd;
+			flex-direction: column;
+			justify-content: flex-start;
+			align-items: flex-start;
+			padding: 80px 40px 40px;
+			gap: 24px;
+			opacity: 0;
+			visibility: hidden;
+			pointer-events: none;
+			transform: translateY(-10px);
+			transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.4s;
+			z-index: 1;
+		}
+
+		.nav-links a {
+			font-size: 28px;
+			font-weight: 400;
+			color: #1d1d1f;
+			opacity: 0;
+			transform: translateY(15px);
+			transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+			width: 100%;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+			padding-bottom: 16px;
+		}
+
+		.nav.is-open {
+			background-color: #fbfbfd;
+		}
+		
+		.nav.is-open .nav-links {
+			opacity: 1;
+			visibility: visible;
+			pointer-events: auto;
+			transform: translateY(0);
+		}
+
+		.nav.is-open .nav-links a {
+			opacity: 1;
+			transform: translateY(0);
+		}
+		
+		.nav.is-open .nav-links a:nth-child(1) { transition-delay: 0.05s; }
+		.nav.is-open .nav-links a:nth-child(2) { transition-delay: 0.1s; }
+		.nav.is-open .nav-links a:nth-child(3) { transition-delay: 0.15s; }
+		.nav.is-open .nav-links a:nth-child(4) { transition-delay: 0.2s; }
+		.nav.is-open .line-1 {
+			transform: translateY(2.75px) rotate(45deg);
+		}
+		.nav.is-open .line-2 {
+			transform: translateY(-2.75px) rotate(-45deg);
+		}
+	}
+</style>
+
+<script>
+	function setupMobileMenu() {
+		const navbar = document.getElementById('navbar');
+		const menuBtn = document.getElementById('mobile-menu-btn');
+		const navLinksContainer = document.getElementById('nav-links');
+		const navLinks = navLinksContainer?.querySelectorAll('a');
+
+		if (!navbar || !menuBtn || !navLinksContainer) return;
+
+		menuBtn.addEventListener('click', () => {
+			const isOpen = navbar.classList.contains('is-open');
+			if (isOpen) {
+				navbar.classList.remove('is-open');
+				document.body.style.overflow = '';
+			} else {
+				navbar.classList.add('is-open');
+				document.body.style.overflow = 'hidden';
+			}
+		});
+
+		navLinks?.forEach(link => {
+			link.addEventListener('click', () => {
+				navbar.classList.remove('is-open');
+				document.body.style.overflow = '';
+			});
+		});
+	}
+
+	setupMobileMenu();
+	
+	document.addEventListener('astro:page-load', setupMobileMenu);
+</script>

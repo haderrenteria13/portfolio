@@ -1,0 +1,704 @@
+---
+import { Image } from 'astro:assets';
+import { lazy } from 'astro:schema';
+
+const toolsCatalog = [
+	{
+		title: 'Lenguajes',
+		items: [
+			{
+				key: 'js',
+				name: 'JavaScript',
+				image: '/Icons/js.png',
+				description: 'JavaScript es el lenguaje principal que uso para construir aplicaciones web dinámicas e interactivas.',
+			},
+			{
+				key: 'python',
+				name: 'Python',
+				image: '/Icons/python.png',
+				description: 'Utilizo Python para el desarrollo backend, scripting y procesamiento de datos debido a su versatilidad y legibilidad.',
+			},
+			{
+				key: 'php',
+				name: 'PHP',
+				image: '/Icons/php.png',
+				description: 'Lo uso para el desarrollo web del lado del servidor y la construcción de sistemas backend robustos.',
+			},
+			{
+				key: 'sql',
+				name: 'SQL',
+				image: '/Icons/sql.png',
+				description: 'Mi lenguaje principal para diseñar, consultar y gestionar bases de datos relacionales de manera eficiente.',
+			},
+		],
+	},
+	{
+		title: 'Frontend & UI',
+		items: [
+			{
+				key: 'html',
+				name: 'HTML',
+				image: '/Icons/html.png',
+				description: 'La base de todos mis proyectos web, asegurando estructuras accesibles y semánticamente correctas.',
+			},
+			{
+				key: 'css',
+				name: 'CSS',
+				image: '/Icons/css.png',
+				description: 'Uso CSS para implementar diseños responsivos y experiencias visuales atractivas en todos los dispositivos.',
+			},
+			{
+				key: 'tailwind',
+				name: 'Tailwind CSS',
+				image: '/Icons/tailwind.png',
+				description: 'Un framework CSS de utilidad primero que me permite construir interfaces de usuario modernas y personalizadas rápidamente.',
+			},
+			{
+				key: 'bootstrap',
+				name: 'Bootstrap',
+				image: '/Icons/bootstrap.png',
+				description: 'Un framework confiable para crear rápidamente diseños responsivos y componentes de interfaz de usuario.',
+			},
+		],
+	},
+	{
+		title: 'Frameworks',
+		items: [
+			{
+				key: 'react',
+				name: 'React',
+				image: '/Icons/react.png',
+				description: 'Construyo interfaces de usuario reactivas y basadas en componentes usando React para web y móvil.',
+			},
+			{
+				key: 'nextjs',
+				name: 'Next.js',
+				image: '/Icons/nextjs.png',
+				description: 'Mi framework preferido de React para construir aplicaciones rápidas y amigables con el SEO con renderizado del lado del servidor.',
+			},
+			{
+				key: 'astro',
+				name: 'Astro',
+				image: '/Icons/astro.png',
+				description: 'Uso Astro para construir sitios web ultra rápidos centrados en el contenido manteniendo el rendimiento al máximo.',
+			},
+			{
+				key: 'django',
+				name: 'Django',
+				image: '/Icons/django.png',
+				description: 'Un framework web de Python de alto nivel que utilizo para desarrollar backends seguros y mantenibles rápidamente.',
+			},
+			{
+				key: 'nestjs',
+				name: 'NestJS',
+				image: '/Icons/nestjs.png',
+				description: 'Un framework progresivo de Node.js que uso para construir aplicaciones del lado del servidor eficientes, confiables y escalables.',
+			},
+		],
+	},
+	{
+		title: 'Entornos',
+		items: [
+			{
+				key: 'node',
+				name: 'Node.js',
+				image: '/Icons/node.png',
+				description: 'Proporciona el entorno de ejecución del lado del servidor para ejecutar código JavaScript fuera del navegador.',
+			},
+			{
+				key: 'git',
+				name: 'Git',
+				image: '/Icons/git.png',
+				description: 'Esencial para el control de versiones, la colaboración y el mantenimiento de un historial organizado de mis bases de código.',
+			},
+			{
+				key: 'figma',
+				name: 'Figma',
+				image: '/Icons/figma.png',
+				description: 'La herramienta colaborativa de diseño de interfaces que uso para prototipar y diseñar experiencias de usuario intuitivas.',
+			},
+		],
+	},
+];
+
+const topGridTools = [
+	'js', 'python', 'react', 'nextjs', 
+	'html', 'css', 'tailwind', 'astro',
+	'node', 'sql', 'git', 'figma',
+	'django', 'nestjs', 'nest', 'php', 'bootstrap'
+];
+
+const toolsData: Record<string, any> = {};
+const toolKeys: string[] = [];
+toolsCatalog.forEach((group) => {
+	group.items.forEach((item) => {
+		toolsData[item.key] = item;
+		toolKeys.push(item.key);
+	});
+});
+
+const renderedGridItems = topGridTools
+	.map((key) => toolsData[key])
+	.filter(Boolean);
+
+---
+
+<section id="tools" class="section section-tools" aria-labelledby="tools-title">
+		<div class="section-inner">
+			<h2 class="section-title" id="tools-title">Stack</h2>
+			<div class="tools-card">
+				<div class="tools-container">
+					<div class="tools-list" id="toolsList">
+					</div>
+					<div class="tools-display">
+						<div class="tools-grid" id="toolsGrid" aria-hidden="false">
+							{renderedGridItems.map((tool) => (
+								<div class="tool-icon-item" data-tool={tool.key}>
+									<Image src={tool.image} alt={tool.name} width={120} height={120} format="webp" loading="lazy" decoding="async"/>
+								</div>
+							))}
+						</div>
+						<div class="tools-detail" id="toolsDetail" aria-live="polite" aria-hidden="true">
+							<img class="tools-detail-icon" src="" alt="" aria-hidden="true" loading="lazy" decoding="async" decoding="async" />
+							<h3 class="tools-detail-name" aria-label="Detalle de la herramienta">&nbsp;</h3>
+							<p class="tools-detail-desc" aria-hidden="true">&nbsp;</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<style>
+	.section {
+		--text-primary: #1d1d1f;
+		--text-secondary: #aeaeb2;
+		--accent: #0071e3;
+		--card-background: #f5f5f7;
+		--site-gutter: 48px;
+		--nav-height: 48px;
+		
+		padding: 140px 0;
+		position: relative;
+		z-index: 100;
+		scroll-margin-top: -80px;
+	}
+
+	.section-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 var(--site-gutter);
+	}
+
+	.section-title {
+		font-size: clamp(40px, 6vw, 48px);
+		font-weight: 500;
+		letter-spacing: -0.015em;
+		margin-bottom: 24px;
+		color: #1d1d1f;
+	}
+
+	.tools-card {
+		background: var(--card-background);
+		border-radius: 32px;
+		padding: 40px;
+		overflow: visible;
+	}
+
+	.tools-container {
+		display: grid;
+		grid-template-columns: 240px 1fr;
+		gap: 24px;
+		align-items: stretch;
+		min-height: 450px;
+	}
+
+	.tools-list {
+		position: sticky;
+		top: calc(var(--nav-height) + 40px);
+	}
+
+	:global(.tools-group) {
+		margin-bottom: 24px;
+	}
+
+	:global(.tools-group-title) {
+		color: var(--text-secondary);
+		margin-bottom: 12px;
+		padding-left: 2px;
+		font-size: 13px;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		font-weight: 700;
+	}
+
+	:global(.tools-group-items) {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	:global(.tool-name) {
+		font-size: 16px;
+		font-weight: 500;
+		padding: 8px 2px;
+		cursor: pointer;
+		color: var(--text-secondary);
+		transition: color 0.25s ease;
+		border-radius: 8px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		width: 100%;
+		text-align: left;
+		background: none;
+		border: none;
+		font: inherit;
+		appearance: none;
+	}
+
+	:global(.tool-name:hover) {
+		color: var(--text-primary);
+	}
+
+	:global(.tool-name.active) {
+		color: var(--text-primary);
+		font-weight: 500;
+	}
+
+	:global(.tool-toggle) {
+		width: 22px;
+		height: 22px;
+		flex-shrink: 0;
+		transition: all 0.25s ease;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='12' y1='8' x2='12' y2='16'/%3E%3Cline x1='8' y1='12' x2='16' y2='12'/%3E%3C/svg%3E");
+	}
+
+	:global(.tool-name.active .tool-toggle) {
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%230071e3'/%3E%3Cline x1='8' y1='12' x2='16' y2='12' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(.tool-name.active .tool-toggle) {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%232997ff'/%3E%3Cline x1='8' y1='12' x2='16' y2='12' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+		}
+	}
+
+	.tools-display {
+		position: relative;
+		height: 100%;
+		min-height: 400px;
+		overflow: visible;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.tools-grid {
+		position: relative;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4/3;
+		max-height: 100%;
+		transition: opacity 0.35s ease, transform 0.35s ease;
+		overflow: visible;
+	}
+
+	.tools-grid.is-hidden {
+		opacity: 0;
+		transform: scale(0.96);
+		pointer-events: none;
+	}
+
+	:global(.tool-icon-item) {
+		position: absolute;
+		top: 0;
+		left: 0;
+		cursor: pointer;
+		will-change: transform;
+		background: none !important;
+		border-radius: 22%;
+		overflow: visible;
+		filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+		transition: filter 0.3s ease;
+	}
+
+	:global(.tool-icon-item:hover) {
+		z-index: 10;
+		filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+	}
+
+	:global(.tool-icon-item img) {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		border-radius: 22%;
+		display: block;
+	}
+
+	.tools-detail {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		opacity: 0;
+		transform: scale(0.96);
+		transition: opacity 0.35s ease, transform 0.35s ease;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		pointer-events: none;
+	}
+
+	.tools-detail.is-visible {
+		opacity: 1;
+		transform: scale(1);
+		pointer-events: auto;
+		z-index: 10;
+	}
+
+	.tools-detail-icon {
+		width: 160px;
+		height: 160px;
+		border-radius: 22%;
+		object-fit: cover;
+		filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.2));
+		margin-bottom: 28px;
+	}
+
+	.tools-detail-name {
+		font-size: 32px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		margin-bottom: 8px;
+		color: var(--text-primary);
+	}
+
+	.tools-detail-desc {
+		font-size: 17px;
+		color: var(--text-secondary);
+		max-width: 440px;
+		line-height: 1.6;
+	}
+
+	@media (max-width: 768px) {
+		.section {
+			--site-gutter: 20px;
+			padding: 72px 0;
+		}
+
+		.section-title {
+			margin-bottom: 32px;
+		}
+
+		.tools-card {
+			padding: 24px;
+			border-radius: 20px;
+		}
+
+		.tools-container {
+			grid-template-columns: 1fr;
+			gap: 24px;
+		}
+
+		.tools-list {
+			position: static;
+			display: flex;
+			gap: 16px;
+			overflow-x: auto;
+			scrollbar-width: none;
+			-ms-overflow-style: none;
+			padding-bottom: 8px;
+			margin-left: -24px;
+			margin-right: -24px;
+			padding-left: 24px;
+			padding-right: 24px;
+		}
+
+		.tools-list::-webkit-scrollbar {
+			display: none;
+		}
+
+		:global(.tools-group) {
+			margin-bottom: 0;
+			flex: 0 0 auto;
+		}
+
+		:global(.tools-group-items) {
+			display: flex;
+			gap: 4px;
+		}
+
+		:global(.tool-name) {
+			white-space: nowrap;
+			padding: 6px 14px;
+			font-size: 14px;
+			border-radius: 980px;
+			background: rgba(0, 0, 0, 0.04);
+		}
+
+		:global(.tool-name.active) {
+			background: var(--accent);
+			color: white;
+		}
+
+		:global(.tool-toggle) {
+			display: none;
+		}
+
+		.tools-display {
+			min-height: 280px;
+		}
+
+		.tools-grid {
+			min-height: 280px;
+		}
+
+		.tools-detail-icon {
+			width: 120px;
+			height: 120px;
+		}
+
+		.tools-detail-name {
+			font-size: 24px;
+		}
+	}
+
+	@media (max-width: 768px) and (prefers-color-scheme: dark) {
+		:global(.tool-name) {
+			background: rgba(255, 255, 255, 0.06);
+		}
+
+		:global(.tool-name.active) {
+			background: var(--accent);
+			color: white;
+		}
+	}
+</style>
+
+<script define:vars={{ toolsCatalog, topGridTools, toolsData }}>
+	let iconPositions = [];
+
+	function initPositions() {
+		const toolsGrid = document.querySelector('.tools-grid');
+		const gridWidth = toolsGrid ? toolsGrid.offsetWidth : 400;
+		const isMobile = window.innerWidth <= 768;
+		
+		const baseSize = gridWidth * (isMobile ? 0.22 : 0.18); 
+
+		const positions = [];
+		const cols = isMobile ? 3 : 4;
+		const rows = isMobile ? 4 : 3;
+		
+		const totalRowsNeeded = Math.ceil(topGridTools.length / cols);
+		
+		const rowOverflow = totalRowsNeeded - rows; 
+		const verticalOffsetPct = (rowOverflow / rows / 4.5) * 100;
+
+		for (let i = 0; i < topGridTools.length; i++) {
+			const row = Math.floor(i / cols);
+			const col = i % cols;
+			const baseX = ((col + 0.5) / cols) * 100;
+			
+			const baseY = (((row + 0.5) / rows) * 100) - verticalOffsetPct;
+			
+			const jitterX = (37 * i) % 4 - 2;
+			const jitterY = (17 * i) % 4 - 2;
+
+			const x = baseX + jitterX;
+			const y = baseY + jitterY;
+
+			positions.push({
+				x,
+				y,
+				size: baseSize * (1.1 + ((i * 13) % 10) / 100),
+				phaseX: (i * 1.5) % (Math.PI * 2),
+				phaseY: (i * 2.5) % (Math.PI * 2),
+				speedX: 0.0006 + ((i * 7) % 5) * 0.0001,
+				speedY: 0.0006 + ((i * 3) % 5) * 0.0001,
+				amp: 0.5 + ((i * 11) % 5) * 0.05,
+			});
+		}
+		
+		return positions;
+	}
+
+	document.addEventListener('DOMContentLoaded', () => {
+		const toolsList = document.getElementById('toolsList');
+		const toolsGrid = document.getElementById('toolsGrid');
+		const toolsDetail = document.getElementById('toolsDetail');
+
+		if (!toolsList || !toolsGrid || !toolsDetail) return;
+		
+		iconPositions = initPositions();
+
+		toolsCatalog.forEach((group) => {
+			const groupEl = document.createElement('div');
+			groupEl.className = 'tools-group';
+
+			const title = document.createElement('h3');
+			title.className = 'caption-label tools-group-title';
+			title.textContent = group.title;
+			groupEl.appendChild(title);
+
+			const list = document.createElement('ul');
+			list.className = 'tools-group-items';
+
+			group.items.forEach((item) => {
+				const li = document.createElement('li');
+				li.className = 'tools-group-item';
+
+				const button = document.createElement('button');
+				button.type = 'button';
+				button.className = 'tool-name';
+				button.dataset.tool = item.key;
+				button.setAttribute('aria-pressed', 'false');
+
+				const toggle = document.createElement('span');
+				toggle.className = 'tool-toggle';
+				toggle.setAttribute('aria-hidden', 'true');
+
+				button.appendChild(toggle);
+				button.appendChild(document.createTextNode(item.name));
+
+				li.appendChild(button);
+				list.appendChild(li);
+			});
+
+			groupEl.appendChild(list);
+			toolsList.appendChild(groupEl);
+		});
+
+		const toolNames = toolsList.querySelectorAll('.tool-name');
+		const toolIconItems = toolsGrid.querySelectorAll('.tool-icon-item');
+
+		let activeToolKey = null;
+		let gridRect = toolsGrid.getBoundingClientRect();
+
+		window.addEventListener('resize', () => {
+			gridRect = toolsGrid.getBoundingClientRect();
+			const isMobile = window.innerWidth <= 768;
+			const newBaseSize = gridRect.width * (isMobile ? 0.22 : 0.18);
+			toolIconItems.forEach((el, i) => {
+				const sizeFactor = 1.1 + ((i * 13) % 10) / 100;
+				el.style.width = (newBaseSize * sizeFactor) + 'px';
+				el.style.height = (newBaseSize * sizeFactor) + 'px';
+			});
+		});
+
+		toolIconItems.forEach((el, i) => {
+			const pos = iconPositions[i] || { x: 50, y: 50, size: 90 };
+			el.dataset.baseX = pos.x;
+			el.dataset.baseY = pos.y;
+			el.dataset.phaseX = pos.phaseX || 0;
+			el.dataset.phaseY = pos.phaseY || 0;
+			el.dataset.speedX = pos.speedX || 0.001;
+			el.dataset.speedY = pos.speedY || 0.001;
+			el.dataset.amp = pos.amp || 1;
+			el.style.width = pos.size + 'px';
+			el.style.height = pos.size + 'px';
+		});
+
+		function updateIcons() {
+			if (activeToolKey) return;
+
+			const time = performance.now();
+
+			toolIconItems.forEach((el) => {
+				const baseX = parseFloat(el.dataset.baseX || '50');
+				const baseY = parseFloat(el.dataset.baseY || '50');
+				const phaseX = parseFloat(el.dataset.phaseX || '0');
+				const phaseY = parseFloat(el.dataset.phaseY || '0');
+				const speedX = parseFloat(el.dataset.speedX || '0.001');
+				const speedY = parseFloat(el.dataset.speedY || '0.001');
+				const amp = parseFloat(el.dataset.amp || '1');
+
+				const swayX =
+					(Math.sin(time * speedX + phaseX) * 0.7 + Math.sin(time * speedX * 0.5 + phaseX) * 0.3) * amp;
+				const swayY =
+					(Math.cos(time * speedY + phaseY) * 0.7 + Math.cos(time * speedY * 0.5 + phaseY) * 0.3) * amp;
+
+				const finalX = baseX + swayX;
+				const finalY = baseY + swayY;
+
+				const pxX = (finalX / 100) * gridRect.width;
+				const pxY = (finalY / 100) * gridRect.height;
+
+				el.style.transform = `translate3d(${pxX}px, ${pxY}px, 0) translate(-50%, -50%)`;
+			});
+
+			requestAnimationFrame(updateIcons);
+		}
+
+		requestAnimationFrame(updateIcons);
+
+		function updateActiveState(toolKey) {
+			toolNames.forEach((el) => {
+				const isActive = el.dataset.tool === toolKey;
+				el.classList.toggle('active', isActive);
+				el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+			});
+		}
+
+		function selectTool(toolKey) {
+			if (activeToolKey === toolKey) {
+				deselectTool();
+				return;
+			}
+
+			activeToolKey = toolKey;
+			const tool = toolsData[toolKey];
+			if (!tool) return;
+
+			updateActiveState(toolKey);
+
+			const detailIcon = toolsDetail?.querySelector('.tools-detail-icon');
+			const detailName = toolsDetail?.querySelector('.tools-detail-name');
+			const detailDesc = toolsDetail?.querySelector('.tools-detail-desc');
+
+			if (detailIcon) {
+				detailIcon.src = tool.image;
+				detailIcon.alt = tool.name;
+			}
+			if (detailName) detailName.textContent = tool.name;
+			if (detailDesc) detailDesc.textContent = tool.description;
+
+			toolsGrid?.classList.add('is-hidden');
+			toolsGrid?.setAttribute('aria-hidden', 'true');
+			toolsDetail?.classList.add('is-visible');
+			toolsDetail?.setAttribute('aria-hidden', 'false');
+		}
+
+		function deselectTool() {
+			const wasSelected = activeToolKey !== null;
+			activeToolKey = null;
+			updateActiveState(null);
+			toolsGrid?.classList.remove('is-hidden');
+			toolsGrid?.setAttribute('aria-hidden', 'false');
+			toolsDetail?.classList.remove('is-visible');
+			toolsDetail?.setAttribute('aria-hidden', 'true');
+
+			if (wasSelected) {
+				requestAnimationFrame(updateIcons);
+			}
+		}
+
+		toolNames.forEach((el) => {
+			el.addEventListener('click', () => {
+				if (el.dataset.tool) selectTool(el.dataset.tool);
+			});
+		});
+
+		toolIconItems.forEach((el) => {
+			el.addEventListener('click', () => {
+				if (el.dataset.tool) selectTool(el.dataset.tool);
+			});
+		});
+	});
+</script>

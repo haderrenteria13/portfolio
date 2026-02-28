@@ -1,0 +1,312 @@
+---
+import { Image } from 'astro:assets';
+import { lazy } from 'astro:schema';
+
+export const socialLinks = [
+	{
+		href: 'https://www.linkedin.com/in/haderrenteria',
+		name: 'Linkedin',
+		src: '/Phone/Icons/linkedin.webp',
+		alt: 'Linkedin',
+		class: 'linkedin',
+	},
+	{
+		href: 'https://www.instagram.com/hader_____13',
+		name: 'Instagram',
+		src: '/Phone/Icons/ig.webp',
+		alt: 'Instagram',
+		class: 'instagram',
+	},
+	{
+		href: 'https://github.com/haderrenteria13',
+		name: 'Github',
+		src: '/Phone/Icons/git.webp',
+		alt: 'Github',
+		class: 'github',
+	},
+	{
+		href: 'mailto:haderrenteria13az@gmail.com',
+		name: 'Email',
+		src: '/Phone/Icons/mail.png',
+		alt: 'Email',
+		class: 'email',
+	},
+];
+---
+
+<footer id="contact" class="section section-connect" aria-labelledby="contact-title">
+	<div class="section-inner">
+		<h2 class="section-title" id="contact-title">Contactame.</h2>
+		<div class="phone-frame">
+			<Image src="/Phone/PhoneBezel.png" alt="" class="phone-bezel" aria-hidden="true" width={800} height={1600} format="webp" loading="lazy" decoding="async" />
+			<div class="phone-screen-container">
+				<Image src="/Phone/PhoneScreen2.png" alt="" class="phone-screen-image" aria-hidden="true" width={800} height={1600} format="webp" loading="lazy" decoding="async" />
+				<div class="phone-icons-grid" id="phoneIconsGrid">
+					{
+						socialLinks.map((link) => (
+							<a
+								href={link.href}
+								class={`phone-app-icon phone-app-${link.name.toLowerCase()}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={link.name}
+							>
+								<div class="phone-app-icon-img">
+									<Image src={link.src} alt={link.alt} width={120} height={120} format="webp" loading="lazy" decoding="async" />
+								</div>
+								<span class="phone-app-icon-label">{link.name}</span>
+							</a>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.section {
+		padding: 140px 0;
+		position: relative;
+		z-index: 100;
+	}
+
+	.section-inner {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 0 48px;
+	}
+
+	.section-connect {
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		position: relative;
+		height: 600px;
+		justify-content: flex-end;
+	}
+
+	.section-connect .section-title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		text-align: center;
+		margin-bottom: 0;
+		z-index: 5;
+		font-size: clamp(40px, 6vw, 48px);
+		font-weight: 500;
+		letter-spacing: -0.015em;
+		color: #1d1d1f;
+	}
+
+	.phone-frame {
+		width: 480px;
+		margin: 0 auto;
+		position: relative;
+		background: transparent;
+		border: none;
+		overflow: visible;
+		z-index: 10;
+		will-change: transform;
+		transform: translateY(100%);
+	}
+
+	.phone-bezel {
+		width: 100%;
+		height: auto;
+		display: block;
+		position: relative;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+	.phone-screen-container {
+		position: absolute;
+		top: 2.2%;
+		left: 5.2%;
+		right: 5.2%;
+		bottom: 2.2%;
+		border-radius: 57px;
+		overflow: hidden;
+		z-index: 1;
+	}
+
+	.phone-screen-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.phone-icons-grid {
+		position: relative;
+		z-index: 3;
+		padding: 90px 33px 30px;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
+		justify-items: center;
+	}
+
+	.phone-app-icon {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		text-decoration: none;
+		color: white;
+		transition: transform 0.2s ease;
+	}
+
+	.phone-app-icon:hover {
+		transform: scale(1.1);
+	}
+
+	.phone-app-icon-img {
+		width: 66px;
+		height: 66px;
+		border-radius: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+		background-color: transparent;
+	}
+
+	.phone-app-icon-img img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.phone-app-icon-label {
+		font-size: 11px;
+		font-weight: 500;
+		opacity: 0.95;
+		color: white;
+	}
+
+	@media (max-width: 768px) {
+		.section-inner {
+			padding: 0 20px;
+		}
+
+		.section-connect {
+			height: 400px;
+		}
+
+		.section-connect .section-title {
+			top: 0;
+			font-size: 32px;
+		}
+
+		.phone-frame {
+			width: 280px;
+		}
+
+		.phone-screen-container {
+			border-radius: 36px;
+		}
+
+		.phone-icons-grid {
+			padding: 55px 20px 20px;
+			gap: 14px;
+		}
+
+		.phone-app-icon-img {
+			width: 46px;
+			height: 46px;
+			border-radius: 11px;
+		}
+
+		.phone-app-icon-label {
+			font-size: 9px;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.phone-frame {
+			width: 260px;
+		}
+
+		.phone-screen-container {
+			border-radius: 32px;
+		}
+
+		.phone-icons-grid {
+			padding: 48px 16px 16px;
+			gap: 10px;
+		}
+
+		.phone-app-icon-img {
+			width: 42px;
+			height: 42px;
+			border-radius: 10px;
+		}
+	}
+</style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const phoneFrame = document.querySelector('.phone-frame') as HTMLElement;
+		if (!phoneFrame) return;
+
+		let targetY = 0;
+		let currentY = 0;
+		let lastTime = 0;
+
+		function easeOutCubic(t: number) {
+			return 1 - Math.pow(1 - t, 3);
+		}
+
+		function updateTarget() {
+			const windowHeight = window.innerHeight;
+			const scrollY = window.scrollY;
+			const scrollHeight = document.documentElement.scrollHeight;
+			const maxScroll = scrollHeight - windowHeight;
+
+			const startTrigger = maxScroll - 300;
+			const linearProgress = Math.min(Math.max((scrollY - startTrigger) / 300, 0), 1);
+			const progress = easeOutCubic(linearProgress);
+
+			const frameHeight = phoneFrame.offsetHeight || 650;
+			const startPos = frameHeight;
+			const endPos = frameHeight * 0.5;
+
+			targetY = startPos - (startPos - endPos) * progress;
+		}
+
+		function animate(timestamp: number) {
+			if (!lastTime) lastTime = timestamp;
+			const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+			lastTime = timestamp;
+
+			const smoothTime = 0.15;
+			const factor = 1 - Math.exp((-dt / smoothTime) * 5);
+			currentY += (targetY - currentY) * factor;
+
+			if (Math.abs(targetY - currentY) < 0.5) {
+				currentY = targetY;
+			}
+
+			phoneFrame.style.transform = `translateY(${currentY}px)`;
+			requestAnimationFrame(animate);
+		}
+
+		const frameHeight = phoneFrame.offsetHeight || 650;
+		currentY = frameHeight;
+		targetY = frameHeight;
+		phoneFrame.style.transform = `translateY(${currentY}px)`;
+
+		window.addEventListener('scroll', updateTarget, { passive: true });
+		updateTarget();
+		requestAnimationFrame(animate);
+	});
+</script>

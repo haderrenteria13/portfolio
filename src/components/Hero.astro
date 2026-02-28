@@ -1,0 +1,605 @@
+---
+import { Image } from 'astro:assets';
+
+const projects = [
+    {
+        id: "enrutapp",
+        name: "Enrutapp",
+        description: "Sports performance tracking",
+        icon: "/Icons/enrutapp.png",
+        gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        url: "https://enrut.app",
+        external: true
+    },
+    {
+        id: "bateadev",
+        name: "BateaDev",
+        description: "Sports performance tracking",
+        icon: "/Icons/bateadev.png",
+        gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        url: "https://github.com/Batea-Dev",
+        external: true
+    },
+    {
+        id: "orvejoyeria",
+        name: "Orve Joyeria",
+        description: "Sports performance tracking",
+        icon: "/Icons/orve.png",
+        gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        url: "https://orvejoyeria.shop/",
+        external: true
+    },
+    {
+        id: "fundacionlared",
+        name: "Fundación La Red",
+        description: "Sports performance tracking",
+        icon: "/Icons/fundacionlared.png",
+        gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+        url: "https://lafundacionlared.org/",
+        external: true
+    }
+];
+
+function generateLayout(isMobile: boolean) {
+    const DESKTOP_SIZES = { S: 100, M: 135, L: 170 };
+    const MOBILE_SIZES  = { S: 70, M: 90, L: 110 };
+
+    const layout = isMobile ? ['M', 'S', 'M'] : ['M', 'L', 'S', 'L', 'M'];
+    const SIZES = isMobile ? MOBILE_SIZES : DESKTOP_SIZES;
+
+    const columns = isMobile ? [15, 50, 85] : [8, 22, 50, 78, 92];
+    const iconsPerColumn = isMobile ? [3, 0, 3] : [3, 2, 0, 2, 3];
+
+    const totalIcons = iconsPerColumn.reduce((sum, count) => sum + count, 0);
+    const repeats = Math.ceil(totalIcons / Math.max(1, projects.length));
+    let pool: any[] = [];
+    for (let r = 0; r < Math.max(1, repeats); r++) {
+        pool = pool.concat(projects);
+    }
+    
+    for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    function isSameProject(a: any, b: any) {
+        if (!a || !b) return false;
+        return a.id === b.id || a.name === b.name;
+    }
+
+    const iconsByColumn = columns.map(() => []);
+    const maxRows = Math.max(...iconsPerColumn);
+
+    for (let row = 0; row < maxRows; row++) {
+        const usedInRow = new Set();
+        for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+            if (row >= iconsPerColumn[columnIndex]) continue;
+
+            const prevInColumn = (iconsByColumn[columnIndex] as any)[row - 1];
+            let pickIndex = pool.findIndex(candidate => !usedInRow.has(candidate.id) && !isSameProject(candidate, prevInColumn));
+            if (pickIndex === -1) pickIndex = pool.findIndex(candidate => !isSameProject(candidate, prevInColumn));
+            if (pickIndex === -1) pickIndex = 0;
+
+            const project = pool.splice(pickIndex, 1)[0] || projects[0];
+            usedInRow.add(project.id);
+            (iconsByColumn[columnIndex] as any).push({ ...project, columnIndex, positionInColumn: row });
+        }
+    }
+
+    return iconsByColumn.flat().map((project: any) => {
+        const columnIndex = project.columnIndex;
+        const columnIconCount = iconsPerColumn[columnIndex];
+
+        const baseX = columns[columnIndex];
+        const variation = (Math.random() - 0.5) * 10;
+        const startX = Math.max(5, Math.min(95, baseX + variation));
+        
+        const sizeLabel = layout[columnIndex];
+        const size = (SIZES as any)[sizeLabel];
+        
+        const allSizes = Object.values(SIZES);
+        const minPx = Math.min(...allSizes);
+        const maxPx = Math.max(...allSizes);
+        const sizeRatio = (size - minPx) / (maxPx - minPx);
+        const speed = 90 - (sizeRatio * 30);
+        
+        const zByLabel = { S: 2, M: 6, L: 10 };
+        const baseZIndex = (zByLabel as any)[sizeLabel];
+        
+        const totalRange = 140;
+        const columnSpacing = totalRange / Math.max(1, columnIconCount);
+
+        const columnOffsets = isMobile ? [1, 0, -1] : [1, -1, 0, 1, -1];
+        const columnOffset = columnOffsets[columnIndex] * columnSpacing * 0.25;
+
+        const startY = -20 + (project.positionInColumn * columnSpacing) + columnOffset;
+
+        return {
+            ...project,
+            startX,
+            startY,
+            size,
+            speed,
+            baseZIndex,
+            totalRange,
+            targetLayer: sizeLabel === 'S' ? 'back' : 'front'
+        };
+    });
+}
+
+const desktopIcons = generateLayout(false);
+const mobileIcons = generateLayout(true);
+---
+
+<section class="hero" aria-labelledby="hero-title">
+    <div class="app-grid-background app-grid-back" id="appGridBack" aria-hidden="true">
+        {desktopIcons.filter(i => i.targetLayer === 'back').map(icon => (
+            <a href={icon.url} target={icon.external ? '_blank' : undefined} rel={icon.external ? 'noopener noreferrer' : undefined}
+               class="floating-icon desktop-icon"
+               data-speed={icon.speed} data-start-y={icon.startY} data-start-x={icon.startX} 
+               data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
+               style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
+               {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+               ) : (
+                   <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
+                     <Fragment set:html={icon.icon} />
+                   </div>
+               )}
+            </a>
+        ))}
+        {mobileIcons.filter(i => i.targetLayer === 'back').map(icon => (
+            <a href={icon.url} target={icon.external ? '_blank' : undefined} rel={icon.external ? 'noopener noreferrer' : undefined}
+               class="floating-icon mobile-icon"
+               data-speed={icon.speed} data-start-y={icon.startY} data-start-x={icon.startX} 
+               data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
+               style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
+               {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+               ) : (
+                   <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
+                     <Fragment set:html={icon.icon} />
+                   </div>
+               )}
+            </a>
+        ))}
+        <div class="scroll-fade-overlay" id="scrollFadeOverlayBack" aria-hidden="true"></div>
+    </div>
+    
+    <div class="app-grid-background app-grid-front" id="appGridFront" aria-hidden="true">
+        {desktopIcons.filter(i => i.targetLayer === 'front').map(icon => (
+            <a href={icon.url} target={icon.external ? '_blank' : undefined} rel={icon.external ? 'noopener noreferrer' : undefined}
+               class="floating-icon desktop-icon"
+               data-speed={icon.speed} data-start-y={icon.startY} data-start-x={icon.startX} 
+               data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
+               style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
+               {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+               ) : (
+                   <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
+                     <Fragment set:html={icon.icon} />
+                   </div>
+               )}
+            </a>
+        ))}
+        {mobileIcons.filter(i => i.targetLayer === 'front').map(icon => (
+            <a href={icon.url} target={icon.external ? '_blank' : undefined} rel={icon.external ? 'noopener noreferrer' : undefined}
+               class="floating-icon mobile-icon"
+               data-speed={icon.speed} data-start-y={icon.startY} data-start-x={icon.startX} 
+               data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
+               style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
+               {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+               ) : (
+                   <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
+                     <Fragment set:html={icon.icon} />
+                   </div>
+               )}
+            </a>
+        ))}
+        <div class="scroll-fade-overlay" id="scrollFadeOverlayFront" aria-hidden="true"></div>
+    </div> 
+
+    <div class="hero-content" id="heroContent">
+        <span class="greeting">Hola, soy</span>
+        <h1>Hader Renteria</h1>
+        <h2>Software Developer & AI</h2>
+        <div class="hero-actions">
+            <a href="#projects" class="hero-cta projects">Mis Proyectos</a>
+            <a href="/HaderRenteriaCV.pdf" target="_blank" class="hero-cta cv">Ver mi CV</a>
+        </div>
+    </div>
+</section>
+
+<style is:global>
+    :root {
+        --nav-height: 48px;
+        --site-gutter: 48px;
+        --background-page: #fbfbfd;
+        --text-primary: #1d1d1f;
+        --text-secondary: #aeaeb2;
+        --accent: #0071e3;
+        --accent-secondary: #0066cc;
+        --accent-tertiary: #aeaeb2;
+    }
+
+    .hero {
+        margin-top: var(--nav-height);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 0 var(--site-gutter);
+        position: relative;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    .greeting {
+		font-size: 20px;
+		color: #aeaeb2;
+		font-weight: 400;
+		margin-bottom: 6px;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+	}
+
+	h1 {
+		font-size: 70px;
+		font-weight: 500;
+        color: var(--text-primary);
+		margin: 0;
+		line-height: 1;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
+	}
+
+	h2 {
+		margin: 12px 0 0 0;
+		font-weight: 400;
+		color: var(--text-secondary);
+		font-size: 27px;
+		opacity: 0;
+		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+	}
+
+    .app-grid-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .app-grid-back {
+        z-index: 3;
+    }
+
+    .app-grid-front {
+        z-index: 10;
+    }
+
+    .scroll-fade-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--background-page);
+        opacity: 0;
+        z-index: 100;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 30;
+        pointer-events: auto;
+        transition: opacity 0.3s ease;
+    }
+
+    .hero-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .hero-badge {
+        display: inline-block;
+        padding: 14px 28px;
+        border-radius: 980px;
+        background: linear-gradient(160deg, #ffffff, #dcdce0);
+        color: #6b6b70;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow:
+            0 1px 3px rgba(0, 0, 0, 0.1),
+            0 4px 12px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .hero-cta {
+        display: inline-block;
+        padding: 14px 36px;
+        color: white;
+        border-radius: 980px;
+        font-size: 17px;
+        font-weight: 400;
+        text-decoration: none;
+        opacity: 0;
+        animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+    }
+
+    .hero-cta:hover {
+		opacity: 0.8 !important;
+		transform: translateY(-2px) scale(1.05) !important;
+	}
+
+    .cv {
+        background-color: transparent;
+        color: var(--accent-secondary);
+        border: 1px solid var(--accent-secondary);
+    }
+    
+    .projects {
+        background-color: var(--accent);
+    }
+
+    .floating-icon {
+        position: absolute;
+        border-radius: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.5s ease, box-shadow 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 12;
+        will-change: transform, opacity, filter;
+        transform: translate3d(-50%, -50%, 0);
+        background: none !important;
+        pointer-events: auto;
+    }
+    
+    .desktop-icon {
+        display: flex;
+    }
+    
+    .mobile-icon {
+        display: none !important;
+    }
+
+    .floating-icon img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 22% !important;
+        display: block !important;
+    }
+
+    .app-grid-background.is-scrolled .floating-icon {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .floating-icon:hover {
+        transform: translate3d(-50%, -50%, 0) scale(1.15) !important;
+        z-index: 20;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    .app-grid-background.is-scrolled .floating-icon:hover {
+        transform: translate3d(-50%, -50%, 0) scale(1) !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+        .hero-cta:hover, .floating-icon:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+    }
+
+	@media (max-width: 768px) {
+		.hero {
+			padding: 72px 20px;
+			min-height: calc(100vh - var(--nav-height));
+		}
+
+		h1 {
+			font-size: 50px;
+		}
+
+		h2 {
+			font-size: 22px;
+		}
+
+		.hero-actions {
+			flex-direction: column;
+			gap: 16px;
+			width: 100%;
+			max-width: 320px;
+			margin: 24px auto 0;
+		}
+
+		.hero-cta {
+			width: 100%;
+			padding: 14px 24px;
+		}
+	}
+
+	@media (max-width: 600px) {
+        .desktop-icon { display: none !important; }
+        .mobile-icon { display: flex !important; }
+    }
+
+	@media (max-width: 480px) {
+		h1 {
+			font-size: 38px;
+		}
+
+		h2 {
+			font-size: 18px;
+		}
+	}
+</style>
+
+<script>
+    function animateFloatingIcons() {
+        let isAnyHovered = false;
+        let slowMotionFactor = 1;
+        let lastTime = Date.now() / 1000;
+        let animationTime = 0;
+
+        function animate() {
+            const isMobile = window.innerWidth <= 600;
+            const selector = isMobile ? '.floating-icon.mobile-icon' : '.floating-icon.desktop-icon';
+            const icons = document.querySelectorAll(selector);
+
+            const currentTime = Date.now() / 1000;
+            const deltaTime = currentTime - lastTime;
+            lastTime = currentTime;
+
+            isAnyHovered = Array.from(icons).some(i => i.matches(':hover')) && window.scrollY < 100;
+            const targetSlowMotion = isAnyHovered ? 0.2 : 1;
+            slowMotionFactor += (targetSlowMotion - slowMotionFactor) * 0.1;
+
+            animationTime += deltaTime * slowMotionFactor;
+
+            icons.forEach((icon: any) => {
+                const speed = parseFloat(icon.dataset.speed);
+                const startY = parseFloat(icon.dataset.startY);
+                const totalRange = parseFloat(icon.dataset.totalRange);
+
+                const progress = (animationTime / speed) % 1;
+                const currentY = startY - (progress * totalRange);
+
+                let wrappedY = currentY;
+                if (wrappedY < -20) {
+                    wrappedY = wrappedY + totalRange;
+                }
+
+                icon.style.top = `${wrappedY}%`;
+                icon.style.transform = 'translate3d(-50%, -50%, 0)';
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    }
+
+    function setupScrollBlur() {
+        const backLayer = document.getElementById('appGridBack');
+        const frontLayer = document.getElementById('appGridFront');
+        if (!backLayer || !frontLayer) return;
+
+        let ticking = false;
+
+        function updateBlur() {
+            const scrollY = window.scrollY;
+            const isAtTop = scrollY < 100;
+
+            const blurAmount = Math.min((scrollY / 800) * 15, 15);
+            const overlayBack = document.getElementById('scrollFadeOverlayBack');
+            const overlayFront = document.getElementById('scrollFadeOverlayFront');
+            const heroContent = document.getElementById('heroContent');
+
+            if (!isAtTop) {
+                backLayer!.style.filter = `blur(${blurAmount}px)`;
+                frontLayer!.style.filter = `blur(${blurAmount}px)`;
+                backLayer!.classList.add('is-scrolled');
+                frontLayer!.classList.add('is-scrolled');
+
+                const overlayOpacity = Math.min(1, scrollY / 300);
+
+                if (overlayBack) overlayBack.style.opacity = overlayOpacity.toString();
+                if (overlayFront) overlayFront.style.opacity = overlayOpacity.toString();
+                if (heroContent) {
+                    heroContent.style.opacity = Math.max(0.3, 1 - overlayOpacity * 0.7).toString();
+                    heroContent.style.filter = `blur(${blurAmount}px)`;
+                }
+            } else {
+                backLayer!.style.filter = 'none';
+                frontLayer!.style.filter = 'none';
+                backLayer!.classList.remove('is-scrolled');
+                frontLayer!.classList.remove('is-scrolled');
+                if (overlayBack) overlayBack.style.opacity = '0';
+                if (overlayFront) overlayFront.style.opacity = '0';
+                if (heroContent) {
+                    heroContent.style.opacity = '1';
+                    heroContent.style.filter = 'none';
+                }
+            }
+
+            const icons = document.querySelectorAll('.floating-icon');
+            icons.forEach((icon: any) => {
+                const baseZ = icon.dataset.baseZIndex || '0';
+                if (isAtTop) {
+                    if (icon.matches(':hover')) {
+                        icon.style.filter = 'none';
+                        icon.style.zIndex = '20';
+                    } else {
+                        icon.style.filter = 'none';
+                        icon.style.zIndex = baseZ;
+                    }
+                } else {
+                    icon.style.filter = 'none';
+                    icon.style.zIndex = baseZ;
+                }
+            });
+
+            ticking = false;
+        }
+
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(updateBlur);
+                ticking = true;
+            }
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        updateBlur();
+
+        document.addEventListener('mouseover', (e: any) => {
+            if (window.scrollY < 100 && e.target.closest('.floating-icon')) {
+                onScroll();
+            }
+        });
+
+        document.addEventListener('mouseout', (e: any) => {
+            if (window.scrollY < 100 && e.target.closest('.floating-icon')) {
+                onScroll();
+            }
+        });
+    }
+
+    function initHero() {
+        setupScrollBlur();
+
+        requestAnimationFrame(() => {
+            animateFloatingIcons();
+        });
+    }
+
+    document.addEventListener('astro:page-load', initHero);
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHero);
+    } else {
+        initHero();
+    }
+</script>
