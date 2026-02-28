@@ -8,125 +8,80 @@ import orvejoyeria from '../assets/orvejoyeria.png';
 
 const projects = [
 	{
-		name: 'EnrutApp',
+		name: "EnrutApp",
 		image: enrutapp.src,
 		year: 2026,
-		description:
-			'Sistema de gestión logística para transporte. Optimiza asignación de vehículos, valida identidad y rastrea GPS en tiempo real.',
-		techs: [
-			'React',
-			'JavaScript',
-			'NestJS',
-			'PostgreSQL',
-			'Socket.IO',
-			'Google Maps API',
-			'Axios',
-			'Material Design',
-			'Prisma',
-			'Expo',
-		],
-		repo: 'https://github.com/EnrutApp',
-		url: 'https://www.enrut.app/',
+		description: "Sistema de gestión logística para transporte. Optimiza asignación de vehículos, valida identidad y rastrea GPS en tiempo real.",
+		techs: ["React", "JavaScript", "NestJS", "PostgreSQL", "Socket.IO", "Google Maps API", "Axios", "Material Design", "Prisma", "Expo"],
+		repo: "https://github.com/EnrutApp",
+		url: "https://www.enrut.app/",
 	},
 	{
-		name: 'BateaDev',
+		name: "BateaDev",
 		image: bateadev.src,
 		year: 2026,
-		description:
-			'Herramientas digitales para resolver problemáticas reales y cerrar brechas de acceso tecnológico en Colombia.',
-		techs: [
-			'Astro',
-			'TypeScript',
-			'Tailwind CSS',
-			'React.js',
-			'Node.js',
-			'Next.js',
-			'TensorFlow',
-			'Git',
-		],
-		repo: 'https://github.com/Batea-Dev/',
+		description: "Herramientas digitales para resolver problemáticas reales y cerrar brechas de acceso tecnológico en Colombia.",
+		techs: ["Astro", "TypeScript", "Tailwind CSS", "React.js", "Node.js", "Next.js", "TensorFlow", "Git"],
+		repo: "https://github.com/Batea-Dev/",
 	},
 	{
-		name: 'Orve Joyeria',
+		name: "Orve Joyeria",
 		image: orvejoyeria.src,
 		year: 2026,
-		description:
-			'E-commerce de joyería de oro laminado con catálogo interactivo y dashboard de administración.',
-		techs: ['Next.js', 'Tailwind CSS', 'Strapi', 'Shadcn'],
-		repo: '',
-		url: '',
+		description: "E-commerce de joyería de oro laminado con catálogo interactivo y dashboard de administración.",
+		techs: ["Next.js", "Tailwind CSS", "Strapi", "Shadcn"],
+		repo: "",
+		url: "",
 	},
 	{
-		name: 'Ronald Barber',
+		name: "Ronald Barber",
 		image: ronaldbarber.src,
 		year: 2025,
-		description:
-			'Sistema de reservas online para barbería. Agenda citas en tiempo real con notificaciones automáticas.',
-		techs: [
-			'Next.js',
-			'Tailwind CSS',
-			'SupaBase',
-			'TypeScript',
-			'Node.js',
-			'WhatsApp.js',
-			'Express',
-		],
-		repo: 'https://github.com/haderrenteria13/ronald-barber',
-		url: 'https://www.ronaldbarber.shop/',
+		description: "Sistema de reservas online para barbería. Agenda citas en tiempo real con notificaciones automáticas.",
+		techs: ["Next.js", "Tailwind CSS", "SupaBase", "TypeScript", "Node.js", "WhatsApp.js", "Express"],
+		repo: "https://github.com/haderrenteria13/ronald-barber",
+		url: "https://www.ronaldbarber.shop/",
 	},
 	{
-		name: 'WhatsApp Bot',
+		name: "WhatsApp Bot",
 		image: whatsappbot.src,
 		year: 2025,
-		description:
-			'API REST para enviar mensajes de WhatsApp mediante whatsapp-web.js. Ideal para notificaciones y alertas automatizadas.',
-		techs: ['Node.js', 'Express', 'WhatsApp.js', 'Puppeteer', 'Docker'],
-		repo: 'https://github.com/haderrenteria13/whatsapp-bot',
-		url: '',
+		description: "API REST para enviar mensajes de WhatsApp mediante whatsapp-web.js. Ideal para notificaciones y alertas automatizadas.",
+		techs: ["Node.js", "Express", "WhatsApp.js", "Puppeteer", "Docker"],
+		repo: "https://github.com/haderrenteria13/whatsapp-bot",
+		url: "",
 	},
 	{
-		name: 'Caninos Sabs',
+		name: "Caninos Sabs",
 		image: caninossabs.src,
 		year: 2025,
-		description:
-			'Plataforma web para clínica veterinaria con catálogo de productos, gestión de inventario y pedidos en tiempo real.',
-		techs: [
-			'React.js',
-			'MongoDB',
-			'Express',
-			'Node.js',
-			'Mongoose',
-			'JWT',
-			'Tailwind CSS',
-			'JavaScript',
-		],
-		repo: 'https://github.com/haderrenteria13/caninos-sabs-platform',
-		url: '',
+		description: "Plataforma web para clínica veterinaria con catálogo de productos, gestión de inventario y pedidos en tiempo real.",
+		techs: ["React.js", "MongoDB", "Express", "Node.js", "Mongoose", "JWT", "Tailwind CSS", "JavaScript"],
+		repo: "https://github.com/haderrenteria13/caninos-sabs-platform",
+		url: "",
 	},
 ];
 ---
 
 <section id="projects">
-	{
-		projects.map((project, index) => (
-			<div
-				class="project-item"
-				data-has-image={project.image ? 'true' : undefined}
-				data-image={project.image}
-				data-name={project.name}
-				data-description={project.description}
-				data-techs={JSON.stringify(project.techs)}
-				data-repo={project.repo || ''}
-				data-url={project.url || ''}
-				style={`--idx:${index}`}
-			>
-				<div class="project-info">
-					<h3>{project.name}</h3>
-				</div>
-				<p>{project.year}</p>
+	{projects.map((project, index) => (
+		<div
+			class="project-item"
+			data-has-image={project.image ? "true" : undefined}
+			data-image={project.image}
+			data-name={project.name}
+			data-description={project.description}
+			data-techs={JSON.stringify(project.techs)}
+			data-repo={project.repo || ""}
+			data-url={project.url || ""}
+			style={`--idx:${index}`}
+		>
+			<div class="project-info">
+				<h3>{project.name}</h3>
 			</div>
-		))
-	}
+			<p>{project.year}</p>
+		</div>
+	))}
 	<div class="project-preview" id="shared-preview">
 		<div class="preview-inner">
 			<img src="" alt="" loading="lazy" />
@@ -135,6 +90,7 @@ const projects = [
 	</div>
 </section>
 
+<!-- Modal de detalle de proyecto -->
 <div id="project-overlay" class="overlay">
 	<div class="overlay-backdrop"></div>
 	<div class="modal-card" role="dialog" aria-labelledby="project-dialog-title">
@@ -155,11 +111,7 @@ const projects = [
 
 			<button class="close-btn" type="button" aria-label="Cerrar">
 				<svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-					<path
-						d="M9.5 1.5L1.5 9.5M1.5 1.5l8 8"
-						stroke="currentColor"
-						stroke-width="1.7"
-						stroke-linecap="round"></path>
+					<path d="M9.5 1.5L1.5 9.5M1.5 1.5l8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
 				</svg>
 			</button>
 		</div>
@@ -168,7 +120,6 @@ const projects = [
 
 <style>
 	#projects {
-		box-sizing: border-box;
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
@@ -191,8 +142,7 @@ const projects = [
 		border-radius: 18px;
 		position: relative;
 		opacity: 0;
-		animation: listSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) calc(0.3s + var(--idx) * 0.07s)
-			forwards;
+		animation: listSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) calc(0.3s + var(--idx) * 0.07s) forwards;
 	}
 
 	.project-item::before {
@@ -200,7 +150,7 @@ const projects = [
 		position: absolute;
 		inset: 0;
 		border-radius: 18px;
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+		background: linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,255,255,0.3));
 		opacity: 0;
 		transition: opacity 0.35s ease;
 	}
@@ -228,6 +178,7 @@ const projects = [
 		z-index: 1;
 	}
 
+	/* ── Preview container ── */
 	.project-preview {
 		position: fixed;
 		top: 50%;
@@ -249,7 +200,10 @@ const projects = [
 
 	.preview-inner {
 		position: relative;
-		transform: rotateX(var(--rotX, 0deg)) rotateY(var(--rotY, 0deg)) scale(var(--scale, 0.92));
+		transform:
+			rotateX(var(--rotX, 0deg))
+			rotateY(var(--rotY, 0deg))
+			scale(var(--scale, 0.92));
 		transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
 		transform-style: preserve-3d;
 		border-radius: 20px;
@@ -276,9 +230,9 @@ const projects = [
 		background: linear-gradient(
 			105deg,
 			transparent 35%,
-			rgba(255, 255, 255, 0.06) 45%,
-			rgba(255, 255, 255, 0.1) 50%,
-			rgba(255, 255, 255, 0.06) 55%,
+			rgba(255,255,255,0.06) 45%,
+			rgba(255,255,255,0.10) 50%,
+			rgba(255,255,255,0.06) 55%,
 			transparent 70%
 		);
 		opacity: 0;
@@ -317,7 +271,7 @@ const projects = [
 	p {
 		margin: 0;
 		font-weight: 400;
-		color: #aeaeb2;
+		color: #AEAEB2;
 		font-size: 22px;
 		position: relative;
 		z-index: 1;
@@ -342,7 +296,6 @@ const projects = [
 		#projects {
 			padding: 0;
 			width: 100%;
-			max-width: 480px;
 		}
 
 		.project-item {
@@ -369,7 +322,7 @@ const projects = [
 
 		.project-item p {
 			font-size: 14px;
-			color: #aeaeb2;
+			color: #AEAEB2;
 		}
 	}
 
@@ -389,6 +342,10 @@ const projects = [
 		}
 	}
 
+	/* ══════════════════════════════════════════════════════════
+	   MODAL - Estilo Contact
+	   ══════════════════════════════════════════════════════════ */
+	
 	.overlay {
 		--radius-modal: 22px;
 		--c-bg: rgba(248, 248, 250, 0.92);
@@ -422,7 +379,7 @@ const projects = [
 		background: rgba(0, 0, 0, 0);
 		backdrop-filter: blur(0px);
 		-webkit-backdrop-filter: blur(0px);
-		transition:
+		transition: 
 			background 400ms var(--ease-ios),
 			backdrop-filter 500ms var(--ease-ios),
 			-webkit-backdrop-filter 500ms var(--ease-ios);
@@ -438,7 +395,7 @@ const projects = [
 		background: rgba(0, 0, 0, 0);
 		backdrop-filter: blur(0px);
 		-webkit-backdrop-filter: blur(0px);
-		transition:
+		transition: 
 			background 300ms var(--ease-ios),
 			backdrop-filter 350ms var(--ease-ios),
 			-webkit-backdrop-filter 350ms var(--ease-ios);
@@ -477,7 +434,7 @@ const projects = [
 			align-items: center;
 			padding: 20px;
 		}
-
+		
 		.modal-card {
 			max-width: 420px;
 			border-radius: var(--radius-modal);
@@ -519,6 +476,7 @@ const projects = [
 		color: var(--c-text);
 	}
 
+	/* Botón cerrar */
 	.overlay .close-btn {
 		position: absolute;
 		top: 18px;
@@ -547,9 +505,10 @@ const projects = [
 
 	.overlay .close-btn:active {
 		transform: scale(0.88);
-		background: rgba(120, 120, 128, 0.3);
+		background: rgba(120, 120, 128, 0.30);
 	}
 
+	/* Imagen del proyecto */
 	.project-modal-image {
 		border-radius: 14px;
 		overflow: hidden;
@@ -610,12 +569,13 @@ const projects = [
 
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
-		const overlay = document.getElementById('project-overlay') as HTMLElement;
+		const overlay  = document.getElementById('project-overlay') as HTMLElement;
 		const closeBtn = overlay?.querySelector('.close-btn');
 		const backdrop = overlay?.querySelector('.overlay-backdrop');
 
 		if (!overlay || !closeBtn) return;
 
+		/* ── Cerrar modal ── */
 		function closeModal() {
 			if (overlay.classList.contains('is-closing')) return;
 			overlay.classList.add('is-closing');
@@ -627,70 +587,72 @@ const projects = [
 
 		closeBtn.addEventListener('click', closeModal);
 		backdrop?.addEventListener('click', closeModal);
-
+		
 		document.addEventListener('keydown', (e) => {
 			if (e.key === 'Escape' && overlay.classList.contains('is-open')) {
 				closeModal();
 			}
 		});
 
+		/* ── Abrir modal ── */
 		function openModal(el: HTMLElement) {
-			const titleEl = document.getElementById('project-dialog-title');
-			const yearEl = document.getElementById('project-dialog-year');
-			const imgEl = document.getElementById('project-dialog-img') as HTMLImageElement | null;
-			const descEl = document.getElementById('project-dialog-desc');
-			const techsEl = document.getElementById('project-dialog-techs');
+			const titleEl  = document.getElementById('project-dialog-title');
+			const yearEl   = document.getElementById('project-dialog-year');
+			const imgEl    = document.getElementById('project-dialog-img') as HTMLImageElement | null;
+			const descEl   = document.getElementById('project-dialog-desc');
+			const techsEl  = document.getElementById('project-dialog-techs');
 
 			if (!titleEl || !imgEl || !descEl || !techsEl || !yearEl) return;
 
 			titleEl.textContent = el.dataset.name || '';
-			yearEl.textContent = el.closest('.project-item')?.querySelector('p')?.textContent || '';
-			imgEl.src = el.dataset.image || '';
-			imgEl.alt = `${el.dataset.name} preview`;
-			descEl.textContent = el.dataset.description || '';
+			yearEl.textContent  = el.closest('.project-item')?.querySelector('p')?.textContent || '';
+			imgEl.src           = el.dataset.image || '';
+			imgEl.alt           = `${el.dataset.name} preview`;
+			descEl.textContent  = el.dataset.description || '';
 
 			techsEl.innerHTML = '';
 			techsEl.style.cssText = 'display: flex; flex-wrap: wrap; gap: 6px;';
-
+			
+			// Mapeo de tecnologías a slugs de Simple Icons
 			const techIcons: Record<string, string> = {
-				React: 'react',
+				'React': 'react',
 				'React.js': 'react',
-				JavaScript: 'javascript',
-				TypeScript: 'typescript',
+				'JavaScript': 'javascript',
+				'TypeScript': 'typescript',
 				'Node.js': 'nodedotjs',
 				'Next.js': 'nextdotjs',
-				Astro: 'astro',
+				'Astro': 'astro',
 				'Tailwind CSS': 'tailwindcss',
-				MongoDB: 'mongodb',
-				PostgreSQL: 'postgresql',
-				Express: 'express',
-				NestJS: 'nestjs',
+				'MongoDB': 'mongodb',
+				'PostgreSQL': 'postgresql',
+				'Express': 'express',
+				'NestJS': 'nestjs',
 				'Socket.IO': 'socketdotio',
 				'Google Maps API': 'googlemaps',
-				Axios: 'axios',
+				'Axios': 'axios',
 				'Material Design': 'materialdesign',
-				Prisma: 'prisma',
-				Expo: 'expo',
-				TensorFlow: 'tensorflow',
-				AI: 'openai',
-				Git: 'git',
-				Strapi: 'strapi',
-				Shadcn: 'shadcnui',
-				SupaBase: 'supabase',
+				'Prisma': 'prisma',
+				'Expo': 'expo',
+				'TensorFlow': 'tensorflow',
+				'AI': 'openai',
+				'Git': 'git',
+				'Strapi': 'strapi',
+				'Shadcn': 'shadcnui',
+				'SupaBase': 'supabase',
 				'WhatsApp.js': 'whatsapp',
-				Puppeteer: 'puppeteer',
-				Docker: 'docker',
-				Mongoose: 'mongoose',
-				JWT: 'jsonwebtokens',
-				MySQL: 'mysql',
-				HTML: 'html5',
-				CSS: 'css3',
-				PHP: 'php',
+				'Puppeteer': 'puppeteer',
+				'Docker': 'docker',
+				'Mongoose': 'mongoose',
+				'JWT': 'jsonwebtokens',
+				'MySQL': 'mysql',
+				'HTML': 'html5',
+				'CSS': 'css3',
+				'PHP': 'php',
 			};
-
+			
 			try {
 				const techs: string[] = JSON.parse(el.dataset.techs || '[]');
-				techs.forEach((t) => {
+				techs.forEach(t => {
 					const span = document.createElement('span');
 					span.style.cssText = `
 						display: inline-flex;
@@ -705,7 +667,7 @@ const projects = [
 						color: rgba(0, 122, 255, 1);
 						white-space: nowrap;
 					`;
-
+					
 					const iconSlug = techIcons[t];
 					if (iconSlug) {
 						const img = document.createElement('img');
@@ -715,21 +677,22 @@ const projects = [
 						img.style.cssText = 'width: 12px; height: 12px; object-fit: contain; flex-shrink: 0;';
 						span.appendChild(img);
 					}
-
+					
 					const text = document.createTextNode(t);
 					span.appendChild(text);
 					techsEl.appendChild(span);
 				});
-			} catch {}
+			} catch { /* ignore */ }
 
+			// Botones de acción
 			const actionsEl = document.getElementById('project-dialog-actions');
 			if (actionsEl) {
 				actionsEl.innerHTML = '';
 				actionsEl.style.cssText = 'display: flex; gap: 10px; margin-top: 16px;';
-
+				
 				const repo = el.dataset.repo || '';
 				const url = el.dataset.url || '';
-
+				
 				if (repo) {
 					const repoBtn = document.createElement('a');
 					repoBtn.href = repo;
@@ -758,7 +721,7 @@ const projects = [
 					`;
 					actionsEl.appendChild(repoBtn);
 				}
-
+				
 				if (url) {
 					const urlBtn = document.createElement('a');
 					urlBtn.href = url;
@@ -795,6 +758,7 @@ const projects = [
 			overlay.classList.add('is-open');
 		}
 
+		/* ── Hover preview ── */
 		const STRENGTH = 30;
 		const TILT_STRENGTH = 8;
 		const LERP = 0.13;
@@ -802,14 +766,10 @@ const projects = [
 		const previewInner = preview?.querySelector('.preview-inner') as HTMLElement | null;
 		const previewImg = preview?.querySelector('img') as HTMLImageElement | null;
 
-		let targetX = 0,
-			targetY = 0;
-		let currentX = 0,
-			currentY = 0;
-		let tiltX = 0,
-			tiltY = 0;
-		let currentTiltX = 0,
-			currentTiltY = 0;
+		let targetX = 0, targetY = 0;
+		let currentX = 0, currentY = 0;
+		let tiltX = 0, tiltY = 0;
+		let currentTiltX = 0, currentTiltY = 0;
 		let isHovering = false;
 		let rafId: number | null = null;
 		let currentSrc = '';
@@ -845,6 +805,7 @@ const projects = [
 			}
 		}
 
+		/* ── Event listeners para items ── */
 		document.querySelectorAll('[data-has-image]').forEach((item) => {
 			const el = item as HTMLElement;
 
@@ -865,16 +826,13 @@ const projects = [
 				if (src && previewImg && previewInner && src !== currentSrc) {
 					previewImg.style.opacity = '0';
 					previewInner.style.setProperty('--scale', '0.88');
-					setTimeout(
-						() => {
-							previewImg.src = src;
-							previewImg.alt = `${name} preview`;
-							currentSrc = src;
-							previewImg.style.opacity = '1';
-							previewInner.style.setProperty('--scale', '1');
-						},
-						isHovering ? 160 : 0
-					);
+					setTimeout(() => {
+						previewImg.src = src;
+						previewImg.alt = `${name} preview`;
+						currentSrc = src;
+						previewImg.style.opacity = '1';
+						previewInner.style.setProperty('--scale', '1');
+					}, isHovering ? 160 : 0);
 				}
 
 				isHovering = true;
@@ -903,9 +861,7 @@ const projects = [
 					tiltX = 0;
 					tiltY = 0;
 					startLoop();
-					setTimeout(() => {
-						currentSrc = '';
-					}, 400);
+					setTimeout(() => { currentSrc = ''; }, 400);
 				}, 80);
 			});
 		});
