@@ -1,4 +1,6 @@
 ---
+import Navbar from '../components/Navbar.astro';
+
 interface Props {
 	title?: string;
 	description?: string;
@@ -68,6 +70,7 @@ const ogImage = `${siteUrl}/og-image.png`;
 		/>
 	</head>
 	<body>
+		<Navbar />
 		<slot />
 		<style is:global>
 			*,
