@@ -405,9 +405,13 @@ const mobileIcons = generateLayout(true);
     }
 
     @media (hover: none) and (pointer: coarse) {
-        .hero-cta:hover, .floating-icon:hover {
+        .hero-cta:hover {
             transform: none !important;
             box-shadow: none !important;
+        }
+        .floating-icon:hover {
+            transform: translate3d(-50%, -50%, 0) scale(1) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
         }
     }
 
