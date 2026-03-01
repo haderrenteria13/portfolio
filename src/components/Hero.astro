@@ -460,11 +460,14 @@ const mobileIcons = generateLayout(true);
 </style>
 
 <script>
+    let heroAnimationFrameId: number | null = null;
+    let ticking = false;
+
     function animateFloatingIcons() {
-        let isAnyHovered = false;
-        let slowMotionFactor = 1;
         let lastTime = Date.now() / 1000;
         let animationTime = 0;
+
+        if (heroAnimationFrameId) cancelAnimationFrame(heroAnimationFrameId);
 
         function animate() {
             const isMobile = window.innerWidth <= 600;
@@ -472,14 +475,12 @@ const mobileIcons = generateLayout(true);
             const icons = document.querySelectorAll(selector);
 
             const currentTime = Date.now() / 1000;
-            const deltaTime = currentTime - lastTime;
+            let deltaTime = currentTime - lastTime;
             lastTime = currentTime;
 
-            isAnyHovered = Array.from(icons).some(i => i.matches(':hover')) && window.scrollY < 100;
-            const targetSlowMotion = isAnyHovered ? 0.2 : 1;
-            slowMotionFactor += (targetSlowMotion - slowMotionFactor) * 0.1;
+            if (deltaTime > 0.1) deltaTime = 0.1;
 
-            animationTime += deltaTime * slowMotionFactor;
+            animationTime += deltaTime;
 
             icons.forEach((icon: any) => {
                 const speed = parseFloat(icon.dataset.speed);
@@ -498,7 +499,7 @@ const mobileIcons = generateLayout(true);
                 icon.style.transform = 'translate3d(-50%, -50%, 0)';
             });
 
-            requestAnimationFrame(animate);
+            heroAnimationFrameId = requestAnimationFrame(animate);
         }
 
         animate();
@@ -569,7 +570,10 @@ const mobileIcons = generateLayout(true);
 
         function onScroll() {
             if (!ticking) {
-                requestAnimationFrame(updateBlur);
+                requestAnimationFrame(() => {
+                    updateBlur();
+                    ticking = false;
+                });
                 ticking = true;
             }
         }
