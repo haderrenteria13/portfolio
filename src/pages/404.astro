@@ -3,13 +3,14 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-	title="Jummm... ¿Dónde estás?"
-	description="Parece que te has perdido. La página que buscas no existe."
+	title="404 — Página no encontrada | Hader Renteria"
+	description="Esta página no existe. Vuelve al portfolio de Hader Renteria."
 >
 	<section>
 		<h1>404</h1>
-		<h2>¡Oops! Te has perdido</h2>
-		<a href="/">Volver a la página de inicio</a>
+		<h2>Esta página no existe</h2>
+		<p>Parece que te perdiste. No hay nada aquí.</p>
+		<a href="/">Volver al inicio</a>
 	</section>
 
 	<style>
@@ -54,6 +55,15 @@ import Layout from '../layouts/Layout.astro';
 			animation: fadeUpBlur 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.25s forwards;
 		}
 
+		p {
+			font-size: 17px;
+			font-weight: 400;
+			margin: 0;
+			color: #c7c7cc;
+			opacity: 0;
+			animation: fadeUpBlur 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.35s forwards;
+		}
+
 		a {
 			padding: 14px 72px;
 			font-size: 15px;
@@ -70,7 +80,7 @@ import Layout from '../layouts/Layout.astro';
 			color: #ffffff;
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 			opacity: 0;
-			animation: fadeUpBlur 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+			animation: fadeUpBlur 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
 		}
 
 		a:hover {
