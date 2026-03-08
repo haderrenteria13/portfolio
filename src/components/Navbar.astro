@@ -68,11 +68,17 @@
 		font-size: 14px;
 		color: var(--text-nav);
 		text-decoration: none;
-		transition: opacity 0.2s;
+		transition: opacity 0.2s, color 0.2s;
 	}
 
 	.nav-links a:hover {
 		opacity: 0.7;
+	}
+
+	.nav-links a.is-active {
+		color: var(--text-primary);
+		opacity: 1;
+		font-weight: 500;
 	}
 
 	.mobile-menu-btn {
@@ -202,4 +208,29 @@
 	setupMobileMenu();
 	
 	document.addEventListener('astro:page-load', setupMobileMenu);
+
+	function setupActiveNav() {
+		const sections = document.querySelectorAll<HTMLElement>('#projects, #about, #tools, #contact');
+		const navLinks = document.querySelectorAll<HTMLAnchorElement>('.nav-links a');
+		if (!sections.length || !navLinks.length) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					const id = entry.target.id;
+					navLinks.forEach(link => {
+						link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+					});
+				}
+			});
+		}, {
+			rootMargin: '-40% 0px -55% 0px',
+			threshold: 0,
+		});
+
+		sections.forEach(section => observer.observe(section));
+	}
+
+	setupActiveNav();
+	document.addEventListener('astro:page-load', setupActiveNav);
 </script>
