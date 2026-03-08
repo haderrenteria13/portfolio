@@ -5,7 +5,7 @@ const projects = [
     {
         id: "enrutapp",
         name: "Enrutapp",
-        description: "Sports performance tracking",
+        description: "Gestión logística y rastreo GPS en tiempo real",
         icon: "/Icons/enrutapp.png",
         gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         url: "https://enrut.app",
@@ -14,7 +14,7 @@ const projects = [
     {
         id: "bateadev",
         name: "BateaDev",
-        description: "Sports performance tracking",
+        description: "Herramientas digitales para cerrar brechas tecnológicas",
         icon: "/Icons/bateadev.png",
         gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         url: "https://github.com/Batea-Dev",
@@ -23,7 +23,7 @@ const projects = [
     {
         id: "orvejoyeria",
         name: "Orve Joyeria",
-        description: "Sports performance tracking",
+        description: "E-commerce de joyería con dashboard de administración",
         icon: "/Icons/orve.png",
         gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         url: "https://orvejoyeria.shop/",
@@ -32,7 +32,7 @@ const projects = [
     {
         id: "fundacionlared",
         name: "Fundación La Red",
-        description: "Sports performance tracking",
+        description: "Optimización SEO y migración de infraestructura web",
         icon: "/Icons/fundacionlared.png",
         gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
         url: "https://lafundacionlared.org/",
@@ -140,7 +140,7 @@ const mobileIcons = generateLayout(true);
                data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
                style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
                {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
-                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" fetchpriority="high" format="webp" />
                ) : (
                    <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
                      <Fragment set:html={icon.icon} />
@@ -155,7 +155,7 @@ const mobileIcons = generateLayout(true);
                data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
                style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
                {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
-                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" fetchpriority="high" format="webp" />
                ) : (
                    <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
                      <Fragment set:html={icon.icon} />
@@ -174,7 +174,7 @@ const mobileIcons = generateLayout(true);
                data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
                style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
                {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
-                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" fetchpriority="high" format="webp" />
                ) : (
                    <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
                      <Fragment set:html={icon.icon} />
@@ -189,7 +189,7 @@ const mobileIcons = generateLayout(true);
                data-total-range={icon.totalRange} data-base-z-index={icon.baseZIndex}
                style={`left: ${icon.startX}%; top: ${icon.startY}%; width: ${icon.size}px; height: ${icon.size}px; z-index: ${icon.baseZIndex};`}>
                {icon.icon.includes('.png') || icon.icon.includes('.jpg') || icon.icon.includes('.webp') ? (
-                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" format="webp" />
+                   <Image src={icon.icon} alt={icon.name} width={200} height={200} loading="eager" fetchpriority="high" format="webp" />
                ) : (
                    <div style={`background: ${icon.gradient}; width: 100%; height: 100%; border-radius: 22%; display: flex; align-items: center; justify-content: center;`}>
                      <Fragment set:html={icon.icon} />
@@ -203,7 +203,7 @@ const mobileIcons = generateLayout(true);
     <div class="hero-content" id="heroContent">
         <span class="greeting">Hola, soy</span>
         <h1>Hader Renteria</h1>
-        <h2>Software Developer & AI</h2>
+        <h2>Software Developer Web & Mobile</h2>
         <div class="hero-actions">
             <a href="#projects" class="hero-cta projects">Mis Proyectos</a>
             <a href="/HaderRenteriaCV.pdf" target="_blank" class="hero-cta cv">Ver mi CV</a>
@@ -246,6 +246,36 @@ const mobileIcons = generateLayout(true);
 		opacity: 0;
 		animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
 	}
+
+    .hero-available {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #1d7a3a;
+        background: rgba(52, 199, 89, 0.10);
+        border: 1px solid rgba(52, 199, 89, 0.25);
+        border-radius: 980px;
+        padding: 6px 14px;
+        margin-bottom: 20px;
+        opacity: 0;
+        animation: heroReveal 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0s forwards;
+    }
+
+    .hero-available-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #34c759;
+        flex-shrink: 0;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.55; transform: scale(0.85); }
+    }
 
 	h1 {
 		font-size: 70px;
@@ -599,6 +629,17 @@ const mobileIcons = generateLayout(true);
 
         requestAnimationFrame(() => {
             animateFloatingIcons();
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (heroAnimationFrameId) {
+                    cancelAnimationFrame(heroAnimationFrameId);
+                    heroAnimationFrameId = null;
+                }
+            } else {
+                animateFloatingIcons();
+            }
         });
     }
 
