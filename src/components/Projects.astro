@@ -56,8 +56,8 @@ const projects = [
 		image: '/Projects/fundacionlared.png',
 		year: 2026,
 		description:
-			'Optimización de rendimiento, SEO y migración de infraestructura para mejorar la presencia digital de la organización.',
-		techs: ['WordPress', 'Elementor', 'Google Search Console', 'Infraestructura y Despliegue', 'SEO', ],
+			'Sitio desarrollado completamente en WordPress, con implementación de estrategia SEO y migración de infraestructura para fortalecer la presencia digital de la organización.',
+		techs: ['WordPress', 'SEO', 'Migración'],
 		repo: '',
 		url: 'https://lafundacionlared.org/',
 	},
@@ -661,6 +661,9 @@ const projects = [
 			techsEl.style.cssText = 'display: flex; flex-wrap: wrap; gap: 6px;';
 
 			const techIcons: Record<string, string> = {
+				WordPress: 'wordpress',
+				SEO: 'googlesearchconsole',
+				'Migración': 'cloudflare',
 				React: 'react',
 				'React.js': 'react',
 				JavaScript: 'javascript',

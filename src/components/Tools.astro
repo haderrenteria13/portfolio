@@ -3,6 +3,17 @@ import { Image } from 'astro:assets';
 
 const toolsCatalog = [
 	{
+		title: 'CMS',
+		items: [
+			{
+				key: 'django',
+				name: 'WordPress',
+				image: '/Icons/django.png',
+				description: 'Sistema de Gestión de Contenidos (CMS) basado en PHP y MySQL que utilizo para crear soluciones web escalables, autogestionables y optimizadas para el rendimiento y SEO técnico.',
+			},
+		],
+	},
+	{
 		title: 'Lenguajes',
 		items: [
 			{
@@ -82,12 +93,6 @@ const toolsCatalog = [
 				description: 'Uso Astro para construir sitios web ultra rápidos centrados en el contenido manteniendo el rendimiento al máximo.',
 			},
 			{
-				key: 'django',
-				name: 'Django',
-				image: '/Icons/django.png',
-				description: 'Un framework web de Python de alto nivel que utilizo para desarrollar backends seguros y mantenibles rápidamente.',
-			},
-			{
 				key: 'nestjs',
 				name: 'NestJS',
 				image: '/Icons/nestjs.png',
@@ -121,10 +126,10 @@ const toolsCatalog = [
 ];
 
 const topGridTools = [
-	'js', 'python', 'react', 'nextjs', 
-	'html', 'css', 'tailwind', 'astro',
-	'node', 'sql', 'git', 'figma',
-	'django', 'nestjs', 'php', 'bootstrap'
+	'django', 'js', 'html', 'css',
+	'php', 'python', 'react', 'nextjs',
+	'tailwind', 'astro', 'node', 'sql',
+	'git', 'figma', 'nestjs', 'bootstrap'
 ];
 
 const toolsData: Record<string, any> = {};
